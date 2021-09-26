@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:backgroundTintMode="screen"
+    tools:context=".LoginActivity">
+
+    <include
+        android:id="@+id/include_toolbar"
+        layout="@layout/custum_toolbar_personalizado"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/logo_encargalo" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="60dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <EditText
+            android:id="@+id/editTextTelefono"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/editex_forma_cuadrada"
+            android:drawableLeft="@drawable/ic_persona_24"
+            android:drawablePadding="7dp"
+            android:drawableTint="@color/azul_100"
+            android:hint="@string/hint_usuario"
+            android:inputType="text"
+            android:textSize="15sp" />
+
+
+            <EditText
+                android:id="@+id/editTextclave"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/editex_forma_cuadrada"
+                android:drawableLeft="@drawable/ic_lock"
+                android:drawablePadding="7dp"
+                android:drawableTint="@color/azul_100"
+                android:hint="@string/hint_contraseña"
+                android:inputType="text|textPassword"
+                android:textSize="15sp" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:text="¿OLvidaste tu contraseña?"
+                android:textColor="#000"
+                android:textSize="13dp" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="100dp"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btn_ingresar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/btn_base_bg_azul_100"
+                android:backgroundTint="@color/azul_100"
+                android:text="Ingresar"
+                android:textColor="#fff"
+                app:cornerRadius="4dp"
+                tools:ignore="OnClick" />
+
+            <Button
+                android:id="@+id/btn_crear_cuenta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/btn_base_bg_azul_100_underline"
+                android:text="Crear cuenta"
+                android:textColor="#000"
+                app:cornerRadius="4dp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="Ingresar con huella"
+            android:textColor="#000"
+            android:textSize="13dp" />
+    </LinearLayout>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

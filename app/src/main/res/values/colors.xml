@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="circle_image_shadow">#8b8b8b</color>
+    <color name="verde">#109a83</color>
+    <color name="azul_100">#1977ab</color>
+    <color name="azul_200">#2aa9e0</color>
+    <color name="white">#fff</color>
+    <color name="gris">#30cbcbcb</color>
+    <color name="rojo">#e3001b</color>
+
+
+
+</resources>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".RegistroActivity">
+
+
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/custum_toolbar_personalizado"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/app_bar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginHorizontal="30dp">
+
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:background="@drawable/logo_encargalo"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:textStyle="bold"
+                android:textSize="20dp"/>
+
+            <TextView
+                android:id="@+id/textView001"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="*Nombres" />
+
+            <EditText
+                android:id="@+id/edtNombres"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/editex_forma_cuadrada"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/textView002"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="*Primer Apellido" />
+
+            <EditText
+                android:id="@+id/edtApPa"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/editex_forma_cuadrada"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="*Segundo Apellido"
+                android:layout_marginTop="10dp"/>
+
+            <EditText
+                android:id="@+id/edtApMa"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/editex_forma_cuadrada" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="*Numero de Credencial"
+                android:layout_marginTop="10dp"/>
+
+            <EditText
+                android:id="@+id/edtNumC"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@drawable/editex_forma_cuadrada" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="*Numero de Celular"
+                android:layout_marginTop="10dp"/>
+
+            <EditText
+                android:id="@+id/edtNumCel"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/editex_forma_cuadrada" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="*Correo Electronico"
+                android:layout_marginTop="10dp"/>
+
+            <EditText
+                android:id="@+id/edtCorreo"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/editex_forma_cuadrada" />
+
+            <CheckBox
+                android:id="@+id/chAcTermino"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Acepta terminos y condiciones" />
+
+            <CheckBox
+                android:id="@+id/chAcPolitica"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Acepta politica de uso de Datos" />
+
+            <CheckBox
+                android:id="@+id/chAcPromo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Acepta envio de promociones" />
+            <Button
+                android:id="@+id/btn_siguiente"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:text="SIGUIENTE"
+                android:textColor="#fff"
+                android:textSize="13dp"
+                android:layout_margin="10dp"
+                android:backgroundTint="@color/azul_100"
+                android:background="@drawable/btn_base_bg_azul_100"
+                android:layout_gravity="center|bottom"
+                android:onClick="registrarUsuario"/>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

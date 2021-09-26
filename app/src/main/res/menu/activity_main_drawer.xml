@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_comprar"
+            android:icon="@drawable/ic_baseline_shopping_cart"
+            android:title="Comprar" />
+        <item
+            android:id="@+id/nav_mis_pedidos"
+            android:icon="@drawable/ic_baseline_list_alt"
+            android:title="Mis Pedidos" />
+        <item
+            android:id="@+id/nav_notificaciones"
+            android:icon="@drawable/ic_baseline_notifications"
+            android:title="Notificaciones" />
+        <item
+            android:title=" "/>
+
+    </group>
+    <item android:title="  ">
+        <menu>
+            <item
+                android:id="@+id/nav_ajustes"
+                android:icon="@drawable/ic_baseline_settings"
+                android:title="Ajustes" />
+            <item
+                android:id="@+id/nav_calificacion"
+                android:icon="@drawable/ic_baseline_star"
+                android:title="Calificación App" />
+        </menu>
+    </item>
+</menu>

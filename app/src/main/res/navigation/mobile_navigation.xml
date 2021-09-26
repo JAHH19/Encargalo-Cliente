@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_comprar">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.cliente.ui.home.HomeFragment"
+        android:label="Inicio"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_mi_perfil"
+        android:name="com.example.cliente.ui.gallery.GalleryFragment"
+        android:label="Mi Perfil"
+        tools:layout="@layout/fragment_perfil" />
+
+    <fragment
+        android:id="@+id/nav_comprar"
+        android:name="com.example.cliente.ui.slideshow.SlideshowFragment"
+        android:label="Comprar"
+        tools:layout="@layout/fragment_slideshow" />
+    <fragment
+        android:id="@+id/nav_mis_pedidos"
+        android:name="com.example.cliente.MisPedidosFragment"
+        android:label="Historial de Pedidos"
+        tools:layout="@layout/fragment_mis_pedidos" />
+    <fragment
+        android:id="@+id/nav_estadisticas"
+        android:name="com.example.cliente.EstadisticasFragment"
+        android:label="Estadísticas"
+        tools:layout="@layout/fragment_estadisticas" />
+    <fragment
+        android:id="@+id/nav_notificaciones"
+        android:name="com.example.cliente.NotificacionesActivity"
+        android:label="Notificaciones"
+        tools:layout="@layout/fragment_notificaciones" />
+    <fragment
+        android:id="@+id/nav_ajustes"
+        android:name="com.example.cliente.AjustesActivity"
+        android:label="Ajustes"
+        tools:layout="@layout/fragment_ajustes" />
+    <fragment
+        android:id="@+id/nav_calificacion"
+        android:name="com.example.cliente.CalificacionFragment"
+        android:label="Calificación App"
+        tools:layout="@layout/fragment_calificacion" />
+</navigation>

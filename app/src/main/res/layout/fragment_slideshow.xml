@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    tools:context=".ui.slideshow.SlideshowFragment"
+    android:background="@drawable/promocion_helado">
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="627dp"
+        android:columnCount="2"
+        android:orientation="vertical"
+        android:rowCount="2"
+        app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardBodegas"
+            android:layout_width="120dp"
+            android:layout_height="144dp"
+            android:layout_margin="40dp"
+            android:layout_marginLeft="65dp"
+            android:layout_marginRight="10dp"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="1dp">
+
+            <LinearLayout
+                android:layout_width="98dp"
+                android:layout_height="130dp"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="100dp"
+                    android:layout_height="110dp"
+                    android:src="@drawable/market" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bodegas"
+                    android:textAlignment="center"
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardFarmacias"
+            android:layout_width="120dp"
+            android:layout_height="144dp"
+            android:layout_margin="50dp"
+            android:layout_marginLeft="65dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            app:cardCornerRadius="1dp"
+            app:cardElevation="1dp">
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/farmacia" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Farmacias"
+                    android:textAlignment="center"
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardRest"
+            android:layout_width="120dp"
+            android:layout_height="144dp"
+            android:layout_margin="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="60dp"
+            app:cardCornerRadius="1dp"
+            app:cardElevation="1dp">
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="99dp"
+                    android:src="@drawable/comer" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Restaurantes"
+                    android:textAlignment="center"
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardFerreteria"
+            android:layout_width="120dp"
+            android:layout_height="144dp"
+            android:layout_margin="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="60dp"
+            app:cardCornerRadius="1dp"
+            app:cardElevation="1dp">
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/construccion" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ferreterias"
+                    android:textAlignment="center"
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </GridLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarInferior"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/color_degradado_toolbar"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme" />
+
+        <ImageButton
+            android:id="@+id/imageButton5"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="17dp"
+            android:layout_marginBottom="2dp"
+            android:background="@color/gris"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_baseline_favorite_24" />
+
+        <ImageButton
+            android:id="@+id/imageButton3"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="367dp"
+            android:layout_marginBottom="2dp"
+            android:background="@color/azul_200"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_baseline_thumb_up" />
+
+        <ImageButton
+            android:id="@+id/imageButton4"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/azul_200"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_baseline_thumb_down" />
+    </RelativeLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

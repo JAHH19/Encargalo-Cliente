@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Cliente</string>
+    <string name="title_activity_menuinicio">menuinicio</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- LOGIN -->
+    <string name="olvidaste_tu_contraseña">¿Olvidaste tu Contraseña?</string>
+    <string name="hint_usuario">Usuario o numero de celular</string>
+    <string name="hint_contraseña">Contraseña</string>
+    <string name="Ingresar_con_huella">Ingresar con huella</string>
+
+    <!-- BUTTON -->
+    <string name="btn_ingresar">Ingresar</string>
+    <string name="btn_crear_cuenta">Crear Cuenta</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+
+
+</resources>
