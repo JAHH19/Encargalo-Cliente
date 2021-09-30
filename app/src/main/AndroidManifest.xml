@@ -10,13 +10,15 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
+        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
+
+        >
         <activity android:name=".DetallePedidoActivity" />
         <activity android:name=".ConfirmarPedidoActivity" />
         <activity android:name=".MiPedidoActivity" />
@@ -32,8 +34,11 @@
 
         <activity
             android:name=".MenuInicioActivity"
+
             android:label="@string/title_activity_menuinicio"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" >
+
+        </activity>
         <activity android:name=".VerificarActivity" />
         <activity android:name=".RegistroActivity" />
         <activity android:name=".LoginActivity" />

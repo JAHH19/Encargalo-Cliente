@@ -71,7 +71,7 @@ public class VerificarActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                ejecutarServicio("http://40.124.98.26/APIS/cliente/registrarcliente.php");
+                ejecutarServicio("http://192.168.1.125/APIS/cliente/registrarcliente.php");
                 iraPrincipal();
             }
         });

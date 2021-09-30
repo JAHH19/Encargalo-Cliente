@@ -16,10 +16,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="20dp"
-            android:text="Categoria del Servicio:"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="15dp"
+            android:text="Categoria de la Publicidad:"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/txt_titulo" />
 
         <TextView
             android:id="@+id/textView23"
@@ -27,10 +28,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="20dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="15dp"
             android:text="Título:"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/imageButton" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView30"
@@ -40,21 +42,21 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginTop="15dp"
-            android:text="URL:"
+            android:text="URL de su negocio:"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/searchView" />
+            app:layout_constraintTop_toBottomOf="@+id/mtxt_descripcion" />
 
         <TextView
-            android:id="@+id/textView32"
+            android:id="@+id/textView38"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginTop="15dp"
-            android:text="Lugar:"
+            android:text="Fecha de inicio:"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine" />
+            app:layout_constraintTop_toBottomOf="@+id/txt_url" />
 
         <TextView
             android:id="@+id/textView31"
@@ -62,10 +64,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="12dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="15dp"
             android:text="Descripción:"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+            app:layout_constraintTop_toBottomOf="@+id/uploadimg" />
 
         <TextView
             android:id="@+id/textView33"
@@ -76,10 +79,44 @@
             android:layout_marginTop="15dp"
             android:text="Fecha límite:"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName3" />
+            app:layout_constraintTop_toBottomOf="@+id/txt_date2" />
+
+        <EditText
+            android:id="@+id/txt_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:longClickable="false"
+            android:textIsSelectable="true"
+            android:focusable="false"
+            android:inputType="date"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/textView33" />
+
+        <EditText
+            android:id="@+id/txt_date2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="10dp"
+            android:ems="10"
+            android:longClickable="false"
+            android:textIsSelectable="true"
+            android:focusable="false"
+            android:inputType="date"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/textView38" />
 
         <Spinner
-            android:id="@+id/spinner2"
+            android:id="@+id/spin_cat"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -90,7 +127,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/txt_titulo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -100,11 +137,12 @@
             android:inputType="textPersonName"
             android:textSize="14sp"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName3"
+            android:id="@+id/txt_url"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -119,9 +157,11 @@
             app:layout_constraintTop_toBottomOf="@+id/textView30" />
 
         <EditText
-            android:id="@+id/editTextTextMultiLine"
-            android:layout_width="344dp"
-            android:layout_height="115dp"
+            android:id="@+id/mtxt_descripcion"
+            android:scrollbars="vertical"
+            android:lines="4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="10dp"
@@ -131,33 +171,6 @@
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toBottomOf="@+id/textView31" />
-
-        <SearchView
-            android:id="@+id/searchView"
-            android:layout_width="0dp"
-            android:layout_height="33dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="10dp"
-            android:iconifiedByDefault="false"
-            android:queryHint="Buscar Lugar de lanzamiento"
-            app:layout_constraintEnd_toStartOf="@+id/guideline3"
-            app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/textView32" />
-
-        <EditText
-            android:id="@+id/editTextDate"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="10dp"
-            android:ems="10"
-            android:inputType="date"
-            app:layout_constraintEnd_toStartOf="@+id/guideline3"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/textView33" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline2"
@@ -181,8 +194,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:text="Resumen:"
+            android:textSize="16sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/editTextDate" />
+            app:layout_constraintTop_toBottomOf="@+id/txt_date" />
 
         <TextView
             android:id="@+id/textView35"
@@ -200,7 +215,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
-            android:text="Total:"
+            android:text="Monto a Pagar:"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toBottomOf="@+id/textView37" />
 
@@ -215,27 +230,78 @@
             app:layout_constraintTop_toBottomOf="@+id/textView35" />
 
         <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
+            android:id="@+id/btnRegistrar"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
-            android:text="Pagar"
+            android:text="Registrar Anuncio"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/textView36" />
+            app:layout_constraintTop_toBottomOf="@+id/btnpago" />
 
-        <ImageButton
-            android:id="@+id/imageButton"
+        <ImageView
+
+            android:id="@+id/uploadimg"
             android:layout_width="0dp"
             android:layout_height="91dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:scaleType="fitXY"
             android:src="@drawable/imgproductosdef"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/spinner2" />
+            app:layout_constraintTop_toBottomOf="@+id/buttonChoose" />
+
+        <TextView
+            android:id="@+id/txtprecio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="16dp"
+            android:text="5.00"
+            app:layout_constraintStart_toEndOf="@+id/textView35"
+            app:layout_constraintTop_toBottomOf="@+id/textView34" />
+
+        <TextView
+            android:id="@+id/txt_dias"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="10dp"
+            android:text="0 dias"
+            app:layout_constraintStart_toEndOf="@+id/textView37"
+            app:layout_constraintTop_toBottomOf="@+id/txtprecio" />
+
+        <TextView
+            android:id="@+id/txtMonto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="10dp"
+            android:text="0.00"
+            app:layout_constraintStart_toEndOf="@+id/textView36"
+            app:layout_constraintTop_toBottomOf="@+id/txt_dias" />
+
+        <Button
+            android:id="@+id/buttonChoose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="Seleccionar Imagen"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/spin_cat" />
+
+        <Button
+            android:id="@+id/btnpago"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Realizar Pago"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/txtMonto" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

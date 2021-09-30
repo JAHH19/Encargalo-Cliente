@@ -1,9 +1,19 @@
 package com.example.cliente;
 
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -11,10 +21,14 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
+import com.squareup.picasso.Picasso;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -28,16 +42,31 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Timer;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 public class MenuInicioActivity extends AppCompatActivity implements Response.ErrorListener, Response.Listener<JSONObject> {
 
     String idusu;
     RequestQueue request;
     JsonObjectRequest jsonObjectRequest;
     TextView navUsername, navUbicacion;
-
+    ImageView adimage;
+    Button btncerrarad;
+    RelativeLayout adcontainer;
 
     private AppBarConfiguration mAppBarConfiguration;
+    int i=0;
 
+    RequestQueue requestQueue;
+
+    ArrayList<String> anuncios = new ArrayList<String>();
+    ArrayList<String> urls = new ArrayList<String>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,15 +90,71 @@ public class MenuInicioActivity extends AppCompatActivity implements Response.Er
         ImageView imgperfil = headView.findViewById(R.id.btn_perfil);
         navUsername = headView.findViewById(R.id.txtUsuario);
         navUbicacion = headView.findViewById(R.id.txtUbicacion);
-        /*imgperfil.setOnClickListener(new View.OnClickListener() {
+
+        adimage=findViewById(R.id.imagead);
+        adcontainer = findViewById(R.id.adcontainer);
+        btncerrarad = findViewById(R.id.btn_cerrarad);
+
+        btncerrarad.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                navController.navigate(R.id.nav_mi_perfil);
-                drawer.closeDrawer(GravityCompat.START);
+            public void onClick(View v) {
+                adcontainer.setVisibility(View.GONE);
             }
-        });*/
-        updateNavHeader();
+        });
+
+
+
+
+
+            buscarAnuncio("http://192.168.1.125:2020/APIS/patrocinador/consultaranuncio.php");
+
+
+
+            final Handler handler = new Handler();
+            Runnable runnable = new Runnable() {
+                int i=0;
+                public void run() {
+
+                    String uri = anuncios.get(i);
+                    String url = urls.get(i);
+
+                    adimage.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent viewIntent4 =
+                                    new Intent("android.intent.action.VIEW",
+                                            Uri.parse(url));
+                            startActivity(viewIntent4);
+                        }
+                    });
+                    Picasso.get().load(uri).into(adimage);
+                    Picasso.get().setLoggingEnabled(true);
+                   // Toast.makeText(getApplicationContext(), "" + i, Toast.LENGTH_SHORT).show();
+                    i++;
+                    if(i>anuncios.size()-1) {
+                        i=0;
+                    }
+                    handler.postDelayed(this, 4000);  //for interval...
+                }
+            };
+            handler.postDelayed(runnable, 4000);
+
+
+
+
+
+
     }
+
+
+
+
+
+        //updateNavHeader();
+
+
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -86,7 +171,7 @@ public class MenuInicioActivity extends AppCompatActivity implements Response.Er
     }
     public  void updateNavHeader(){
         idusu = getIntent().getStringExtra("idusuario");
-        String URL = "http://40.124.98.26/APIS/cliente/consultarNombreUbicacionusuario.php?idusuario="+idusu;
+        String URL = "http://192.168.1.125:2020/APIS/cliente/consultarNombreUbicacionusuario.php?idusuario="+idusu;
         URL = URL.replace(" ", "%20");
         request = Volley.newRequestQueue(this);
         jsonObjectRequest = new  JsonObjectRequest(Request.Method.GET,URL,null,this,this);
@@ -110,5 +195,40 @@ public class MenuInicioActivity extends AppCompatActivity implements Response.Er
         }catch (JSONException e){
             e.printStackTrace();
         }
+    }
+
+    public void buscarAnuncio(String URL){
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                JSONObject jsonObject = null;
+
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        jsonObject = response.getJSONObject(i);
+                        anuncios.add(jsonObject.getString("imagen"));
+                        urls.add(jsonObject.getString("url"));
+
+                    } catch (JSONException ex) {
+                        Toast.makeText(getApplicationContext(), "" + ex.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(),"Error de conexion",Toast.LENGTH_SHORT).show();
+            }
+        });
+        requestQueue=Volley.newRequestQueue(this);
+        requestQueue.add(jsonArrayRequest);
+    }
+
+    @Override
+    protected void onResume() {
+        buscarAnuncio("http://192.168.1.125:2020/APIS/patrocinador/consultaranuncio.php");
+        adcontainer.setVisibility(View.VISIBLE);
+        super.onResume();
     }
 }

@@ -81,7 +81,7 @@ public class Database extends SQLiteAssetHelper {
 
         cart = new Database(activity).getProductosPedidos();
         for (ItemListOrder order:cart){
-            String URL2 = "http://localhost:2020/APIS/cliente/ingresarlistapedido.php?idtiendaproducto="+order.getIdProducto()+"&idpedido="+idpedido+"&cantidad="+order.getCant()+"&preciouniMX="+order.getPrecio()+"&subtotal="+String.valueOf((Double.parseDouble(order.getCant())*Double.parseDouble(order.getPrecio())*100)/100.0);
+            String URL2 = "http://192.168.1.125:2020/APIS/cliente/ingresarlistapedido.php?idtiendaproducto="+order.getIdProducto()+"&idpedido="+idpedido+"&cantidad="+order.getCant()+"&preciouniMX="+order.getPrecio()+"&subtotal="+String.valueOf((Double.parseDouble(order.getCant())*Double.parseDouble(order.getPrecio())*100)/100.0);
             StringRequest request2 = new StringRequest(Request.Method.GET, URL2, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {

@@ -39,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         //edtPassword.setText(shpreferences.getString("pass",""));
 
         btnIngresar.setOnClickListener(v -> {
-            validarUsuario("http://40.124.98.26/APIS/cliente/validarusuario.php");
+            validarUsuario("http://192.168.1.125:2020/APIS/cliente/validarusuario.php");
             SharedPreferences shpreferencias = getSharedPreferences("ARCHIVOREG",Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = shpreferencias.edit();
             editor.putString("usuario", edtUsuario.getText().toString());
@@ -70,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(LoginActivity.this,error.toString(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this,error.toString(),Toast.LENGTH_LONG).show();
             }
         }){
             @Override

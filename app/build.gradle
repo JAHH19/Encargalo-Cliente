@@ -12,7 +12,7 @@ android {
 
         defaultConfig {
             applicationId "com.example.cliente"
-            minSdkVersion 24
+            minSdkVersion 23
             targetSdkVersion 30
             versionCode 1
             versionName "1.0"
@@ -54,8 +54,14 @@ android {
         implementation 'androidx.biometric:biometric:1.0.1'
         implementation 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
         implementation 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
+        implementation 'net.gotev:uploadservice:2.1'
+        implementation 'com.squareup.picasso:picasso:2.71828'
 
-
+    }
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
     }
 }
 

@@ -1,64 +1,462 @@
 package com.example.cliente;
 
+import android.app.DatePickerDialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Base64;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link PublicidadFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import net.gotev.uploadservice.MultipartUploadRequest;
+import net.gotev.uploadservice.UploadNotificationConfig;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.net.URI;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+
+
 public class PublicidadFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+   private Spinner spinner_cat;
+   private Button btn_pagar;
+   private EditText date_f,date_i;
+   private EditText descripcion,titulo,url;
+   private EditText fechainicio, fechafinal;
+   private TextView dias,monto,precio;
+   DatePickerDialog.OnDateSetListener setListener;
+   MenuInicioActivity menuInicioActivity = new MenuInicioActivity();
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    //Declaring views
+    private Button buttonChoose;
 
-    public PublicidadFragment() {
-        // Required empty public constructor
-    }
+    private Button buttonRegistrar;
+    private ImageView imageView;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PublicidadFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static PublicidadFragment newInstance(String param1, String param2) {
-        PublicidadFragment fragment = new PublicidadFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    //Image request code
+    private int PICK_IMAGE_REQUEST = 1;
 
+    //storage permission code
+    private static final int STORAGE_PERMISSION_CODE = 123;
+
+    //Bitmap to get image from gallery
+    private Bitmap bitmap;
+
+    //Uri to store the image uri
+    private Uri filePath;
+    public static final String UPLOAD_URL = "http://192.168.1.125:2020/APIS/patrocinador/uploadImages.php";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_publicidad, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_publicidad, container, false);
+        //Cargando Elementos UI
+        spinner_cat = (Spinner) view.findViewById(R.id.spin_cat);
+        date_i=(EditText) view.findViewById(R.id.txt_date2);
+        date_f=(EditText) view.findViewById(R.id.txt_date);
+        descripcion = (EditText) view.findViewById(R.id.mtxt_descripcion);
+        titulo= (EditText) view.findViewById(R.id.txt_titulo);
+        url = (EditText)view.findViewById(R.id.txt_url);
+        fechainicio=(EditText)view.findViewById(R.id.txt_date);
+        dias=(TextView)view.findViewById(R.id.txt_dias);
+        monto=(TextView)view.findViewById(R.id.txtMonto);
+        precio=(TextView)view.findViewById(R.id.txtprecio);
+
+        buttonChoose = (Button) view.findViewById(R.id.buttonChoose);
+
+        buttonRegistrar = (Button)view.findViewById(R.id.btnRegistrar);
+        imageView = (ImageView) view.findViewById(R.id.uploadimg);
+
+
+        //Carga de datos al spinner de categorias
+
+        String[] arraySpinner = new String[] {
+                "Posicionar marca",
+                "Anunciar Productos u Ofertas",
+                "Publicidad institucional",
+                "Publicidad sin fines de lucro",
+                "Publicidad de servicio publico"
+
+        };
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item, arraySpinner);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_cat.setAdapter(adapter);
+
+        //Carga de datos al datepicker
+
+        Calendar calendar = Calendar.getInstance();
+
+
+        final int year = calendar.get(Calendar.YEAR);
+        final int month = calendar.get(Calendar.MONTH);
+        final int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+
+        long now = System.currentTimeMillis() - 1000;
+
+        String today = year+"-"+(month+1)+"-"+day;
+
+        String tomorrow = year+"-"+(month+1)+"-"+(day+1);
+        date_i.setText(today);
+        date_f.setText(tomorrow);
+
+
+        setListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int day) {
+
+                month = month +1;
+                String date =year+"-"+month+"-"+day;
+
+                date_f.setText("");
+                date_i.setText(date);
+            }
+        };
+
+        date_i.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int day) {
+                        month = month+1;
+                        String date =year+"-"+month+"-"+day;
+                        date_i.setText(date);
+
+                        try {
+                            int diff=getDaysDifference(date_i.getText().toString(),date_f.getText().toString());
+                            dias.setText(diff+" dias");
+                            monto.setText("$ "+Float.parseFloat(precio.getText().toString())*diff);
+
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                            Toast.makeText(getContext(),e.getMessage()+"SALIO",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },year,month,day);
+                datePickerDialog.getDatePicker().setMinDate(now);
+                datePickerDialog.show();
+            }
+        });
+
+
+        setListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int day) {
+                month = month +1;
+                String date =year+"-"+month+"-"+day;
+                date_f.setText("");
+                date_f.setText(date);
+            }
+        };
+
+        date_f.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int day) {
+                        month = month+1;
+                        String date =year+"-"+month+"-"+day;
+                        date_f.setText(date);
+
+                        try {
+                            int diff=getDaysDifference(date_i.getText().toString(),date_f.getText().toString());
+                            dias.setText(diff+" dias");
+                            monto.setText(""+Float.parseFloat(precio.getText().toString())*diff);
+
+
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                            Toast.makeText(getContext(),e.getMessage()+"SALIO",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },year,month,day);
+                datePickerDialog.getDatePicker().setMinDate(now);
+                datePickerDialog.show();
+            }
+        });
+
+        date_f.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+
+        //descripcion antiscroll
+
+        descripcion.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (descripcion.hasFocus()) {
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
+                    switch (event.getAction() & MotionEvent.ACTION_MASK){
+                        case MotionEvent.ACTION_SCROLL:
+                            v.getParent().requestDisallowInterceptTouchEvent(false);
+                            return true;
+                    }
+                }
+                return false;
+            }
+
+
+        });
+
+        requestStoragePermission();
+
+
+
+        //Setting clicklistener
+        buttonChoose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFileChooser();
+            }
+        });
+
+
+        buttonRegistrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                uploadMultipart();
+                ejecutarServicio("http://192.168.1.125:2020/APIS/patrocinador/registrarAnuncio.php");
+
+
+               // menuInicioActivity.buscarAnuncio("http://192.168.1.125:2020/APIS/patrocinador/consultaranuncio.php");
+            }
+        });
+
+        return view;
+    }
+
+
+    public void uploadMultipart() {
+
+
+        //getting the actual path of the image
+        String path = getPath(filePath);
+
+
+        //Uploading code
+        try {
+            String uploadId = UUID.randomUUID().toString();
+
+            new MultipartUploadRequest(getContext(), uploadId, UPLOAD_URL)
+                    .addFileToUpload(path, "image") //Adding file
+                    .addParameter("name", "none") //Adding text parameter to the request
+                    .setNotificationConfig(new UploadNotificationConfig())
+                    .setMaxRetries(2)
+                    .startUpload(); //Starting the upload
+
+        } catch (Exception exc) {
+            Toast.makeText(getContext(), exc.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    //method to show file chooser
+    private void showFileChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+    }
+
+    //handling the image chooser activity result
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == getActivity().RESULT_OK && data != null && data.getData() != null) {
+            filePath = data.getData();
+
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
+                imageView.setImageBitmap(bitmap);
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    //method to get the file path from uri
+    public String getPath(Uri uri) {
+        Cursor cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
+        cursor.moveToFirst();
+        String document_id = cursor.getString(0);
+        document_id = document_id.substring(document_id.lastIndexOf(":") + 1);
+        cursor.close();
+
+        cursor = getActivity().getContentResolver().query(
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                null, MediaStore.Images.Media._ID + " = ? ", new String[]{document_id}, null);
+        cursor.moveToFirst();
+        String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+        cursor.close();
+
+        return path;
+    }
+
+
+    //Requesting permission
+    private void requestStoragePermission() {
+        if (ContextCompat.checkSelfPermission(getContext(), android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+            return;
+
+        if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            //If the user has denied the permission previously your code will come to this block
+            //Here you can explain why you need this permission
+            //Explain here why you need this permission
+        }
+        //And finally ask for the permission
+        ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
+    }
+
+
+    //This method will be called when the user will tap on allow or deny
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        //Checking the request code of our request
+        if (requestCode == STORAGE_PERMISSION_CODE) {
+
+            //If permission is granted
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //Displaying a toast
+                Toast.makeText(getContext(), "Permission granted now you can read the storage", Toast.LENGTH_LONG).show();
+            } else {
+                //Displaying another toast if permission is not granted
+                Toast.makeText(getContext(), "Oops you just denied the permission", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+
+    private void ejecutarServicio(String URL){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                Toast.makeText(getContext(), "Anuncio Registrado", Toast.LENGTH_SHORT).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(),error.toString(),Toast.LENGTH_SHORT).show();
+            }
+        }){
+
+
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
+                Bitmap bitmap = drawable.getBitmap();
+                String imagenString =getBase64String(bitmap);
+
+                Map<String,String> parametros = new HashMap<String, String>();
+                parametros.put("categoria",spinner_cat.getSelectedItem().toString());
+                parametros.put("titulo",titulo.getText().toString());
+                parametros.put("descr",descripcion.getText().toString());
+                parametros.put("image",imagenString);
+                parametros.put("url","http://"+url.getText().toString());
+                parametros.put("fechainicio",date_i.getText().toString());
+                parametros.put("fechafinal",date_f.getText().toString());
+                parametros.put("monto",monto.getText().toString());
+                parametros.put("idper","1");
+
+
+                return parametros;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(stringRequest);
+
+    }
+
+    private String getBase64String(Bitmap bitmap)
+    {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 90, baos);
+
+        byte[] imageBytes = baos.toByteArray();
+
+        String base64String = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+
+        return base64String;
+    }
+
+    public static int getDaysDifference(String datei,String datef) throws ParseException {
+        Date fromDate=new SimpleDateFormat("yyyy-MM-dd").parse(datei);
+        Date toDate=new SimpleDateFormat("yyyy-MM-dd").parse(datef);
+        if(fromDate==null||toDate==null)
+            return 0;
+
+        return (int)( (toDate.getTime() - fromDate.getTime()) / (1000 * 60 * 60 * 24));
     }
 }
