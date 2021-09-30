@@ -1,14 +1,9 @@
 package com.example.cliente;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -27,9 +22,6 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
 import com.squareup.picasso.Picasso;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -43,19 +35,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Timer;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public class MenuInicioActivity extends AppCompatActivity implements Response.ErrorListener, Response.Listener<JSONObject> {
 
     String idusu;
     RequestQueue request;
     JsonObjectRequest jsonObjectRequest;
-    TextView navUsername, navUbicacion;
+    TextView navUsername, navUbicacion,iduser;
     ImageView adimage;
     Button btncerrarad;
     RelativeLayout adcontainer;
@@ -64,6 +50,7 @@ public class MenuInicioActivity extends AppCompatActivity implements Response.Er
     int i=0;
 
     RequestQueue requestQueue;
+    String idusuario;
 
     ArrayList<String> anuncios = new ArrayList<String>();
     ArrayList<String> urls = new ArrayList<String>();
@@ -89,8 +76,10 @@ public class MenuInicioActivity extends AppCompatActivity implements Response.Er
         View headView = navigationView.getHeaderView(0);
         ImageView imgperfil = headView.findViewById(R.id.btn_perfil);
         navUsername = headView.findViewById(R.id.txtUsuario);
+        iduser = headView.findViewById(R.id.txtidcliente);
         navUbicacion = headView.findViewById(R.id.txtUbicacion);
-
+        idusuario = getIntent().getExtras().getString("idusuario");
+        iduser.setText(idusuario);
         adimage=findViewById(R.id.imagead);
         adcontainer = findViewById(R.id.adcontainer);
         btncerrarad = findViewById(R.id.btn_cerrarad);

@@ -17,7 +17,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="28dp"
             android:layout_marginTop="15dp"
             android:text="Categoria de la Publicidad:"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -66,7 +65,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="20dp"
             android:text="Descripción:"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toBottomOf="@+id/uploadimg" />
@@ -90,10 +89,10 @@
             android:layout_alignParentBottom="true"
             android:layout_marginTop="8dp"
             android:ems="10"
-            android:longClickable="false"
-            android:textIsSelectable="true"
             android:focusable="false"
             android:inputType="date"
+            android:longClickable="false"
+            android:textIsSelectable="true"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -107,10 +106,10 @@
             android:layout_alignParentBottom="true"
             android:layout_marginTop="10dp"
             android:ems="10"
-            android:longClickable="false"
-            android:textIsSelectable="true"
             android:focusable="false"
             android:inputType="date"
+            android:longClickable="false"
+            android:textIsSelectable="true"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -159,8 +158,6 @@
 
         <EditText
             android:id="@+id/mtxt_descripcion"
-            android:scrollbars="vertical"
-            android:lines="4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -169,6 +166,8 @@
             android:ems="10"
             android:gravity="start|top"
             android:inputType="textMultiLine"
+            android:lines="4"
+            android:scrollbars="vertical"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toBottomOf="@+id/textView31" />
@@ -246,8 +245,7 @@
 
             android:id="@+id/uploadimg"
             android:layout_width="0dp"
-            android:layout_height="91dp"
-            android:layout_marginTop="20dp"
+            android:layout_height="150dp"
             android:scaleType="fitXY"
             android:src="@drawable/imgproductosdef"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
@@ -259,38 +257,36 @@
             android:id="@+id/txtprecio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
             android:layout_marginTop="16dp"
             android:text="5.00"
-            app:layout_constraintStart_toEndOf="@+id/textView35"
+            app:layout_constraintStart_toStartOf="@+id/guideline4"
             app:layout_constraintTop_toBottomOf="@+id/textView34" />
 
         <TextView
             android:id="@+id/txt_dias"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
             android:text="0 dias"
-            app:layout_constraintStart_toEndOf="@+id/textView37"
+            app:layout_constraintStart_toStartOf="@+id/guideline4"
             app:layout_constraintTop_toBottomOf="@+id/txtprecio" />
 
         <TextView
             android:id="@+id/txtMonto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="12dp"
             android:text="0.00"
-            app:layout_constraintStart_toEndOf="@+id/textView36"
+            app:layout_constraintStart_toStartOf="@+id/guideline4"
             app:layout_constraintTop_toBottomOf="@+id/txt_dias" />
 
         <Button
             android:id="@+id/buttonChoose"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="20dp"
             android:text="Seleccionar Imagen"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toBottomOf="@+id/spin_cat" />
 
@@ -303,6 +299,13 @@
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toBottomOf="@+id/txtMonto" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="162dp" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
