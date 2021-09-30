@@ -79,7 +79,7 @@ public class MenuInicioActivity extends AppCompatActivity implements Response.Er
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_comprar, R.id.nav_mis_pedidos,R.id.nav_notificaciones,R.id.nav_publicidad,R.id.nav_ajustes,R.id.nav_calificacion,R.id.nav_mi_perfil)
+                R.id.nav_comprar, R.id.nav_mis_pedidos,R.id.nav_notificaciones,R.id.nav_menupublicidad,R.id.nav_ajustes,R.id.nav_calificacion,R.id.nav_mi_perfil)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);

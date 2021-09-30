@@ -17,7 +17,7 @@
             android:icon="@drawable/ic_baseline_notifications"
             android:title="Notificaciones" />
         <item
-            android:id="@+id/nav_publicidad"
+            android:id="@+id/nav_menupublicidad"
             android:icon="@drawable/ic_action_campaign"
             android:title="Publicitar" />
 

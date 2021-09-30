@@ -1,6 +1,7 @@
 package com.example.cliente;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -14,6 +15,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -79,18 +81,19 @@ public class PublicidadFragment extends Fragment {
     private ImageView imageView;
 
 
-    //Image request code
+
     private int PICK_IMAGE_REQUEST = 1;
 
-    //storage permission code
+
     private static final int STORAGE_PERMISSION_CODE = 123;
 
-    //Bitmap to get image from gallery
+
     private Bitmap bitmap;
 
-    //Uri to store the image uri
     private Uri filePath;
     public static final String UPLOAD_URL = "http://192.168.1.125:2020/APIS/patrocinador/uploadImages.php";
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -112,6 +115,8 @@ public class PublicidadFragment extends Fragment {
 
         buttonRegistrar = (Button)view.findViewById(R.id.btnRegistrar);
         imageView = (ImageView) view.findViewById(R.id.uploadimg);
+
+
 
 
         //Carga de datos al spinner de categorias
@@ -280,8 +285,20 @@ public class PublicidadFragment extends Fragment {
         buttonRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                uploadMultipart();
-                ejecutarServicio("http://192.168.1.125:2020/APIS/patrocinador/registrarAnuncio.php");
+
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Anuncios")
+                        .setMessage("¿Quieres registrar tu anuncio?")
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                              //  Toast.makeText(getContext(), "Yes", Toast.LENGTH_SHORT).show();
+                                uploadMultipart();
+                                ejecutarServicio("http://192.168.1.125:2020/APIS/patrocinador/registrarAnuncio.php");
+                            }})
+                        .setNegativeButton(android.R.string.no, null).show();
+
 
 
                // menuInicioActivity.buscarAnuncio("http://192.168.1.125:2020/APIS/patrocinador/consultaranuncio.php");
@@ -368,11 +385,9 @@ public class PublicidadFragment extends Fragment {
             return;
 
         if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            //If the user has denied the permission previously your code will come to this block
-            //Here you can explain why you need this permission
-            //Explain here why you need this permission
+
         }
-        //And finally ask for the permission
+
         ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
     }
 
@@ -459,4 +474,5 @@ public class PublicidadFragment extends Fragment {
 
         return (int)( (toDate.getTime() - fromDate.getTime()) / (1000 * 60 * 60 * 24));
     }
+
 }
