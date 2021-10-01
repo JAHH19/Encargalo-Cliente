@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
+    android:background="@color/white"
+
+    android:padding="5dp">
+
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/moreBtn"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="5dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_image_next"
+        app:tint="@color/black" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/titleads"
+        android:layout_marginTop="5dp"
+        android:layout_toStartOf="@id/moreBtn"
+        android:text="Titulo"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/dateads"
+        android:layout_below="@+id/titleads"
+        android:layout_toStartOf="@+id/moreBtn"
+        android:text="Desde 27/08/02 hasta 27/08/02"
+        android:textColor="#939292"/>
+    <ImageView
+        android:layout_width="160dp"
+        android:layout_height="80dp"
+        android:id="@+id/imageads"
+        android:layout_below="@+id/dateads"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:adjustViewBounds="true"
+        android:background="#939292"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_image_black"
+        />
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dateads"
+        android:layout_marginTop="5dp"
+        android:maxLines="3"
+        android:text="Descripcion del anuncio"
+        android:layout_toStartOf="@+id/moreBtn"
+        android:layout_toEndOf="@+id/imageads"
+        android:textColor="@color/black"/>
+    <TextView
+        android:id="@+id/estadoads"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/description"
+        android:layout_marginTop="5dp"
+        android:maxLines="2"
+        android:text="Estado"
+        android:layout_toStartOf="@+id/moreBtn"
+        android:layout_toEndOf="@+id/imageads"
+        android:textColor="@color/black"/>
+</RelativeLayout>

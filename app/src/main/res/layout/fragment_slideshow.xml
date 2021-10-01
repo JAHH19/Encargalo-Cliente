@@ -10,7 +10,7 @@
     android:background="@drawable/promocion_helado">
 
     <GridLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="627dp"
         android:columnCount="2"
         android:orientation="vertical"

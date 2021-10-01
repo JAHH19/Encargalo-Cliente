@@ -1,16 +1,14 @@
 package com.example.cliente;
 
 import android.app.DatePickerDialog;
+//import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -21,8 +19,6 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -50,27 +46,27 @@ import net.gotev.uploadservice.UploadNotificationConfig;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.net.URI;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 
-public class PublicidadFragment extends Fragment {
+
+public class PublicidadFragment extends Fragment  {
 
    private Spinner spinner_cat;
    private Button btn_pagar;
    private EditText date_f,date_i;
    private EditText descripcion,titulo,url;
-   private EditText fechainicio, fechafinal;
+   private EditText fechainicio, fechafinal,horainicio,horafinal;
    private TextView dias,monto,precio;
+   String idusuario;
    DatePickerDialog.OnDateSetListener setListener;
    MenuInicioActivity menuInicioActivity = new MenuInicioActivity();
 
@@ -86,13 +82,15 @@ public class PublicidadFragment extends Fragment {
 
 
     private static final int STORAGE_PERMISSION_CODE = 123;
-
-
+    int y,m,d;
+    int y2,m2,d2;
+    int hr,mn;
+    int hr2,mn2;
     private Bitmap bitmap;
 
     private Uri filePath;
     public static final String UPLOAD_URL = "http://192.168.1.125:2020/APIS/patrocinador/uploadImages.php";
-
+    Calendar calendar = Calendar.getInstance();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -103,13 +101,16 @@ public class PublicidadFragment extends Fragment {
         spinner_cat = (Spinner) view.findViewById(R.id.spin_cat);
         date_i=(EditText) view.findViewById(R.id.txt_date2);
         date_f=(EditText) view.findViewById(R.id.txt_date);
+        horainicio=(EditText)view.findViewById(R.id.txt_horai);
+        horafinal=(EditText)view.findViewById(R.id.txt_horaf);
         descripcion = (EditText) view.findViewById(R.id.mtxt_descripcion);
         titulo= (EditText) view.findViewById(R.id.txt_titulo);
         url = (EditText)view.findViewById(R.id.txt_url);
-        fechainicio=(EditText)view.findViewById(R.id.txt_date);
+
         dias=(TextView)view.findViewById(R.id.txt_dias);
         monto=(TextView)view.findViewById(R.id.txtMonto);
         precio=(TextView)view.findViewById(R.id.txtprecio);
+        idusuario = getActivity().getIntent().getExtras().getString("idusuario");
 
         buttonChoose = (Button) view.findViewById(R.id.buttonChoose);
 
@@ -136,81 +137,96 @@ public class PublicidadFragment extends Fragment {
 
         //Carga de datos al datepicker
 
-        Calendar calendar = Calendar.getInstance();
+
 
 
         final int year = calendar.get(Calendar.YEAR);
         final int month = calendar.get(Calendar.MONTH);
         final int day = calendar.get(Calendar.DAY_OF_MONTH);
+        final int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        final int minute=calendar.get(Calendar.MINUTE);
+
+
 
 
         long now = System.currentTimeMillis() - 1000;
 
         String today = year+"-"+(month+1)+"-"+day;
-
+        String hournow =  hour+":"+minute+":00";
         String tomorrow = year+"-"+(month+1)+"-"+(day+1);
+        String hourtomorrow = (hour+1)+":"+minute+":00";
+        hr2=hour+1;
         date_i.setText(today);
         date_f.setText(tomorrow);
+        horainicio.setText(hournow);
+        horafinal.setText(hourtomorrow);
 
 
-        setListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int day) {
 
-                month = month +1;
-                String date =year+"-"+month+"-"+day;
-
-                date_f.setText("");
-                date_i.setText(date);
-            }
-        };
 
         date_i.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+
+
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
                         month = month+1;
                         String date =year+"-"+month+"-"+day;
+                        y=year;
+                        m=month-1;
+                        d=day;
+
                         date_i.setText(date);
 
                         try {
                             int diff=getDaysDifference(date_i.getText().toString(),date_f.getText().toString());
                             dias.setText(diff+" dias");
-                            monto.setText("$ "+Float.parseFloat(precio.getText().toString())*diff);
+                            monto.setText(""+Float.parseFloat(precio.getText().toString())*diff);
 
                         } catch (ParseException e) {
                             e.printStackTrace();
                             Toast.makeText(getContext(),e.getMessage()+"SALIO",Toast.LENGTH_SHORT).show();
                         }
                     }
-                },year,month,day);
+
+                },y,m,d);
                 datePickerDialog.getDatePicker().setMinDate(now);
-                datePickerDialog.show();
+
+                String datef= date_f.getText().toString();
+                SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+                try {
+                    Date d = f.parse(datef);
+                    long milliseconds = d.getTime();
+                    datePickerDialog.getDatePicker().setMaxDate(milliseconds);
+
+                    datePickerDialog.show();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+
             }
         });
 
 
-        setListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int day) {
-                month = month +1;
-                String date =year+"-"+month+"-"+day;
-                date_f.setText("");
-                date_f.setText(date);
-            }
-        };
+
 
         date_f.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
               DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
 
+
+
                     @Override
-                    public void onDateSet(DatePicker view, int year, int month, int day) {
-                        month = month+1;
-                        String date =year+"-"+month+"-"+day;
+                    public void onDateSet(DatePicker view, int yearf, int monthf, int dayf) {
+                        monthf = monthf+1;
+                        String date =yearf+"-"+monthf+"-"+dayf;
+                        y2=yearf;
+                        m2=monthf-1;
+                        d2=dayf;
                         date_f.setText(date);
 
                         try {
@@ -224,29 +240,62 @@ public class PublicidadFragment extends Fragment {
                             Toast.makeText(getContext(),e.getMessage()+"SALIO",Toast.LENGTH_SHORT).show();
                         }
                     }
-                },year,month,day);
-                datePickerDialog.getDatePicker().setMinDate(now);
-                datePickerDialog.show();
-            }
-        });
+                },y2,m2,d2);
+                String datei= date_i.getText().toString();
+                SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
 
-        date_f.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                try {
+                    Date d = f.parse(datei);
+                    long milliseconds = d.getTime();
+                    datePickerDialog.getDatePicker().setMinDate(milliseconds);
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
+                    datePickerDialog.show();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
 
             }
         });
 
+      horainicio.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+
+              int seconds=0;
+              TimePickerDialog timePickerDialog =  TimePickerDialog.newInstance(new TimePickerDialog.OnTimeSetListener() {
+                  @Override
+                  public void onTimeSet(TimePickerDialog view, int hourOfDay, int minute, int second) {
+                      horainicio.setText(String.format("%02d:%02d", hourOfDay, minute));
+                      hr=hourOfDay;
+                      mn=minute;
+                  }
+              }, hour, minute, seconds, true);
+                timePickerDialog.setMinTime(hour,minute,0);
+             timePickerDialog.setMaxTime(hr2,mn2,0);
+              timePickerDialog.show(getFragmentManager(),"TimePickerDialog");
+
+
+          }
+      });
+
+        horafinal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                int seconds=0;
+               TimePickerDialog timePickerDialog =  TimePickerDialog.newInstance(new TimePickerDialog.OnTimeSetListener() {
+                   @Override
+                   public void onTimeSet(TimePickerDialog view, int hourOfDayf, int minutef, int second) {
+                       horafinal.setText(String.format("%02d:%02d", hourOfDayf, minutef));
+                       hr2=hourOfDayf;
+                       mn2=minutef;
+                   }
+               }, hour, minute, seconds, true);
+               timePickerDialog.setMinTime(hr,mn,0);
+                timePickerDialog.show(getFragmentManager(),"TimePickerDialog");
+
+            }
+        });
 
 
         //descripcion antiscroll
@@ -294,8 +343,14 @@ public class PublicidadFragment extends Fragment {
 
                             public void onClick(DialogInterface dialog, int whichButton) {
                               //  Toast.makeText(getContext(), "Yes", Toast.LENGTH_SHORT).show();
-                                uploadMultipart();
-                                ejecutarServicio("http://192.168.1.125:2020/APIS/patrocinador/registrarAnuncio.php");
+                                if(IsValid(titulo) && IsValid(descripcion) && IsValid(url)&& IsValidImage(filePath,getContext())){
+
+                                    uploadMultipart();
+                                    ejecutarServicio("http://192.168.1.125:2020/APIS/patrocinador/registrarAnuncio.php");
+
+
+                                }
+
                             }})
                         .setNegativeButton(android.R.string.no, null).show();
 
@@ -330,6 +385,8 @@ public class PublicidadFragment extends Fragment {
         } catch (Exception exc) {
             Toast.makeText(getContext(), exc.getMessage(), Toast.LENGTH_SHORT).show();
         }
+
+
     }
 
 
@@ -416,7 +473,17 @@ public class PublicidadFragment extends Fragment {
             @Override
             public void onResponse(String response) {
 
-                Toast.makeText(getContext(), "Anuncio Registrado", Toast.LENGTH_SHORT).show();
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Registro exitoso")
+                        .setPositiveButton("ok", null)
+                        .setMessage( "Su anuncio se ha publicado exitosamente. \n"+response )
+                        .show();
+                titulo.getText().clear();
+                descripcion.getText().clear();
+                url.getText().clear();
+                monto.setText("0.00");
+
+                dias.setText("0 dias");
             }
         }, new Response.ErrorListener() {
             @Override
@@ -439,10 +506,10 @@ public class PublicidadFragment extends Fragment {
                 parametros.put("descr",descripcion.getText().toString());
                 parametros.put("image",imagenString);
                 parametros.put("url","http://"+url.getText().toString());
-                parametros.put("fechainicio",date_i.getText().toString());
-                parametros.put("fechafinal",date_f.getText().toString());
+                parametros.put("fechainicio",date_i.getText().toString()+" "+horainicio.getText().toString());
+                parametros.put("fechafinal",date_f.getText().toString()+" "+horafinal.getText().toString());
                 parametros.put("monto",monto.getText().toString());
-                parametros.put("idper","1");
+                parametros.put("idper", idusuario);
 
 
                 return parametros;
@@ -474,5 +541,48 @@ public class PublicidadFragment extends Fragment {
 
         return (int)( (toDate.getTime() - fromDate.getTime()) / (1000 * 60 * 60 * 24));
     }
+
+
+    public static boolean IsValid(EditText campo){
+        boolean valido;
+
+        if(campo.length()>0){
+            valido=true;
+
+        }else{
+            valido=false;
+            campo.requestFocus();
+            new AlertDialog.Builder(campo.getContext())
+                    .setTitle("Campo Obligatorio")
+                    .setPositiveButton("ok", null)
+                    .setMessage( "Este campo es obligatorio, no puede quedar vacio."  )
+                    .show();
+        }
+
+        return valido;
+    };
+
+
+    public static boolean IsValidImage(Uri campo, Context cnt){
+        boolean valido;
+
+        if(campo!=null){
+            valido=true;
+
+        }else{
+            valido=false;
+
+            new AlertDialog.Builder(cnt)
+                    .setTitle("Imagen Obligatoria")
+                    .setPositiveButton("ok", null)
+                    .setMessage( "No se subio ninguna imagen para la publicidad."  )
+                    .show();
+        }
+
+        return valido;
+    };
+
+  
+
 
 }

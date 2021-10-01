@@ -63,6 +63,7 @@ public class MenuInicioActivity extends AppCompatActivity implements Response.Er
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -77,6 +78,10 @@ public class MenuInicioActivity extends AppCompatActivity implements Response.Er
         ImageView imgperfil = headView.findViewById(R.id.btn_perfil);
         navUsername = headView.findViewById(R.id.txtUsuario);
         iduser = headView.findViewById(R.id.txtidcliente);
+
+        Intent intent = new Intent(getApplicationContext(), PublicidadFragment.class);
+        intent.putExtra("idusuario",iduser.getText().toString());
+
         navUbicacion = headView.findViewById(R.id.txtUbicacion);
         idusuario = getIntent().getExtras().getString("idusuario");
         iduser.setText(idusuario);
@@ -104,26 +109,28 @@ public class MenuInicioActivity extends AppCompatActivity implements Response.Er
                 int i=0;
                 public void run() {
 
-                    String uri = anuncios.get(i);
-                    String url = urls.get(i);
+                    if(anuncios.size()>0 && urls.size()>0){
+                        String uri = anuncios.get(i);
+                        String url = urls.get(i);
 
-                    adimage.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent viewIntent4 =
-                                    new Intent("android.intent.action.VIEW",
-                                            Uri.parse(url));
-                            startActivity(viewIntent4);
+                        adimage.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent viewIntent4 =
+                                        new Intent("android.intent.action.VIEW",
+                                                Uri.parse(url));
+                                startActivity(viewIntent4);
+                            }
+                        });
+                        Picasso.get().load(uri).into(adimage);
+                        Picasso.get().setLoggingEnabled(true);
+                       // Toast.makeText(getApplicationContext(), "" + i, Toast.LENGTH_SHORT).show();
+                        i++;
+                        if(i>anuncios.size()-1) {
+                            i=0;
                         }
-                    });
-                    Picasso.get().load(uri).into(adimage);
-                    Picasso.get().setLoggingEnabled(true);
-                   // Toast.makeText(getApplicationContext(), "" + i, Toast.LENGTH_SHORT).show();
-                    i++;
-                    if(i>anuncios.size()-1) {
-                        i=0;
+                        handler.postDelayed(this, 4000);  //for interval...
                     }
-                    handler.postDelayed(this, 4000);  //for interval...
                 }
             };
             handler.postDelayed(runnable, 4000);

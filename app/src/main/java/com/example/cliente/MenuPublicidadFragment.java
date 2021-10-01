@@ -12,8 +12,9 @@ import androidx.annotation.Nullable;
 
 public class MenuPublicidadFragment extends Fragment {
 
-    Button buttoncrear ;
+    Button buttoncrear,buttonrevisar ;
     PublicidadFragment publicidadFragment= new PublicidadFragment();
+    MisanunciosFragment misanunciosFragment = new MisanunciosFragment();
 
     @Nullable
     @Override
@@ -24,12 +25,19 @@ public class MenuPublicidadFragment extends Fragment {
         View view =inflater.inflate(R.layout.fragment_menu_publicidad, container, false);
 
         buttoncrear = view.findViewById(R.id.btn_crearads);
-
+        buttonrevisar = view.findViewById(R.id.btn_verads);
 
         buttoncrear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 createFragment(publicidadFragment);
+            }
+        });
+
+        buttonrevisar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createFragment(misanunciosFragment);
             }
         });
 

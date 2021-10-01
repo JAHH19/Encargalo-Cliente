@@ -57,4 +57,9 @@
         android:name="com.example.cliente.MenuPublicidadFragment"
         android:label="Publicita con Nosotros"
         tools:layout="@layout/fragment_menu_publicidad" />
+    <fragment
+        android:id="@+id/nav_misanuncios"
+        android:name="com.example.cliente.MisanunciosFragment"
+        android:label="Mis anuncios"
+        tools:layout="@layout/fragment_misanuncios" />
 </navigation>
