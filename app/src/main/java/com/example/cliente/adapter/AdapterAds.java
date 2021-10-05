@@ -3,6 +3,7 @@ package com.example.cliente.adapter;
 import android.content.Context;
 
 import android.graphics.Color;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +13,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+
+import com.example.cliente.AnuncioDetallesFragment;
 import com.example.cliente.R;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.jsoup.Jsoup;
@@ -57,7 +63,7 @@ public class AdapterAds extends RecyclerView.Adapter<AdapterAds.HolderAds>{
         String titulo = model.getTitulo();
         String descripcion = model.getDescripcion();
         String categoria = model.getCategoria();
-        //String id = model.getId();
+        String id = model.getId();
         String fechainicio = model.getFechainicio();
         String fechafinal = model.getFechafinal();
         String montopagado = model.getMontopagado();
@@ -89,11 +95,16 @@ public class AdapterAds extends RecyclerView.Adapter<AdapterAds.HolderAds>{
             formattedDate2=dateFormat2.format(date2);
 
 
-            if(date2.after(dateFormat.parse(todays)) || date2.equals(dateFormat.parse(todays))){
+            if(date.before(dateFormat.parse(todays)) && date2.after(dateFormat.parse(todays))){
                 estado="Estado: Activo";
                 holder.estado.setTextColor(Color.parseColor("#FF109A83"));
 
-            }else{
+            }else if(date.after(dateFormat.parse(todays)) && date2.after(dateFormat.parse(todays)) ){
+                estado="Estado: Proximo a Salir";
+                holder.estado.setTextColor(Color.parseColor("#806600"));
+            }
+
+            else if(date.before(dateFormat.parse(todays)) && date2.before(dateFormat.parse(todays))){
 
                 estado="Estado: Inactivo";
                 holder.estado.setTextColor(Color.RED);
@@ -116,7 +127,16 @@ public class AdapterAds extends RecyclerView.Adapter<AdapterAds.HolderAds>{
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("adsId", id);
 
+
+                FragmentManager fm =   ((AppCompatActivity)context).getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                AnuncioDetallesFragment llf = new AnuncioDetallesFragment();
+                llf.setArguments(bundle);
+                ft.add(R.id.nav_host_fragment, llf);
+                ft.commit();
 
 
             }

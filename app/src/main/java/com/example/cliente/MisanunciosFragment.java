@@ -31,7 +31,7 @@ import java.util.ArrayList;
 public class MisanunciosFragment extends Fragment {
 
     private RecyclerView adsRv;
-    private Button loadMoreBtn;
+    private Button loadMoreBtn,btnadsdetail;
 
     private String url="http://192.168.1.125:2020/APIS/patrocinador/consultaanuncioespf.php?idusuario=abc";
     private String nextToken="";
@@ -40,6 +40,7 @@ public class MisanunciosFragment extends Fragment {
     private AdapterAds adapterAds;
 
     private ProgressDialog progressDialog;
+    AnuncioDetallesFragment anuncioDetallesFragment = new AnuncioDetallesFragment();
 
     private static final String TAG = "MAIN_TAG";
 
@@ -48,6 +49,7 @@ public class MisanunciosFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_misanuncios, container, false);
+
 
         adsRv = view.findViewById(R.id.adsRv);
         loadMoreBtn = view.findViewById(R.id.btnmore);
@@ -67,6 +69,8 @@ public class MisanunciosFragment extends Fragment {
                 loadAds();
             }
         });
+
+
 
         return view;
     }
@@ -91,6 +95,7 @@ public class MisanunciosFragment extends Fragment {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         try {
                             JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                            String id = jsonObject1.getString("IdAnuncio");
                             String titulo= jsonObject1.getString("titulo");
                             String descripcion = jsonObject1.getString("descripcion");
                             String categoria = jsonObject1.getString("categoria");
@@ -101,13 +106,14 @@ public class MisanunciosFragment extends Fragment {
 
                             String image = jsonObject1.getString("imagen");
 
-                            ModelAds modelAds = new ModelAds("" + titulo,
+                            ModelAds modelAds = new ModelAds( ""+titulo,
                                     "" + descripcion, "" + image,
                                     "" + categoria,
                                     "" + url,
                                     "" + fechainicio,
                                     "" + fechafinal,
-                                    "" + montopagado
+                                    "" + montopagado,
+                                    ""+id
                                     );
                             adsArrayList.add(modelAds);
 
@@ -126,6 +132,7 @@ public class MisanunciosFragment extends Fragment {
                     adapterAds = new AdapterAds(getContext(), adsArrayList);
 
                     adsRv.setAdapter(adapterAds);
+
                     progressDialog.dismiss();
 
                 } catch (Exception e) {
@@ -145,4 +152,6 @@ public class MisanunciosFragment extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(stringRequest);
     }
+
+
 }

@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -48,14 +49,20 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import com.example.cliente.adapter.ModelAds;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class PublicidadFragment extends Fragment  {
@@ -91,6 +98,7 @@ public class PublicidadFragment extends Fragment  {
     private Uri filePath;
     public static final String UPLOAD_URL = "http://192.168.1.125:2020/APIS/patrocinador/uploadImages.php";
     Calendar calendar = Calendar.getInstance();
+    String[] arraySpinner;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -122,18 +130,9 @@ public class PublicidadFragment extends Fragment  {
 
         //Carga de datos al spinner de categorias
 
-        String[] arraySpinner = new String[] {
-                "Posicionar marca",
-                "Anunciar Productos u Ofertas",
-                "Publicidad institucional",
-                "Publicidad sin fines de lucro",
-                "Publicidad de servicio publico"
 
-        };
+       listarcategorias("http://192.168.1.125:2020/APIS/cliente/consultarcategorias.php");
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item, arraySpinner);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_cat.setAdapter(adapter);
 
         //Carga de datos al datepicker
 
@@ -468,6 +467,60 @@ public class PublicidadFragment extends Fragment  {
     }
 
 
+    private void listarcategorias(String URL){
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                JSONArray jsonArray = null;
+                try {
+                    jsonArray = new JSONArray(response);
+                    ArrayList<String> arraycat = new ArrayList<String>();
+                    Log.d("jahh20","Resp"+jsonArray.length());
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        try {
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                            String id= jsonObject1.getString("IdCategoria");
+                            String categoria = jsonObject1.getString("nombre");
+
+                            Log.d("jahh20","Resp"+id+ " "+categoria);
+                            arraycat.add(id+"| "+categoria);
+
+
+
+
+                        } catch (Exception e) {
+
+                            Toast.makeText(getContext(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Log.d("jahh20","Resp"+e.getMessage());
+
+                        }
+                    }
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item, arraycat);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner_cat.setAdapter(adapter);
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.d("jahh20","Resp"+e.getMessage());
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(),error.toString(),Toast.LENGTH_SHORT).show();
+            }
+        }){
+
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(stringRequest);
+
+    }
+
     private void ejecutarServicio(String URL){
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
@@ -501,7 +554,10 @@ public class PublicidadFragment extends Fragment  {
                 String imagenString =getBase64String(bitmap);
 
                 Map<String,String> parametros = new HashMap<String, String>();
-                parametros.put("categoria",spinner_cat.getSelectedItem().toString());
+                String categorias = spinner_cat.getSelectedItem().toString();
+                String[] cat=categorias.split("|");
+
+                parametros.put("categoria",cat[1]);
                 parametros.put("titulo",titulo.getText().toString());
                 parametros.put("descr",descripcion.getText().toString());
                 parametros.put("image",imagenString);

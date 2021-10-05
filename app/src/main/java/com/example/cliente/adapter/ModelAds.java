@@ -4,7 +4,7 @@ public class ModelAds {
 
     String titulo, descripcion,imagen,categoria,url,fechainicio,fechafinal,montopagado,id;
 
-    public ModelAds(String titulo, String descripcion, String imagen, String categoria, String url, String fechainicio, String fechafinal, String montopagado) {
+    public ModelAds(String titulo, String descripcion, String imagen, String categoria, String url, String fechainicio, String fechafinal, String montopagado,String id) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.imagen = imagen;
@@ -13,7 +13,7 @@ public class ModelAds {
         this.fechainicio = fechainicio;
         this.fechafinal = fechafinal;
         this.montopagado = montopagado;
-
+        this.id = id;
     }
 
     public String getTitulo() {
@@ -78,6 +78,14 @@ public class ModelAds {
 
     public void setMontopagado(String montopagado) {
         this.montopagado = montopagado;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String montopagado) {
+        this.id = id;
     }
 
 
