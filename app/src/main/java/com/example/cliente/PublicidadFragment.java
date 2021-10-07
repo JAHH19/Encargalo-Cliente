@@ -58,6 +58,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import com.example.cliente.adapter.ModelAds;
+import com.squareup.picasso.Picasso;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import org.json.JSONArray;
@@ -94,7 +95,7 @@ public class PublicidadFragment extends Fragment  {
     int hr,mn;
     int hr2,mn2;
     private Bitmap bitmap;
-
+    String adsId;
     private Uri filePath;
     public static final String UPLOAD_URL = "http://192.168.1.125:2020/APIS/patrocinador/uploadImages.php";
     Calendar calendar = Calendar.getInstance();
@@ -145,7 +146,8 @@ public class PublicidadFragment extends Fragment  {
         final int hour = calendar.get(Calendar.HOUR_OF_DAY);
         final int minute=calendar.get(Calendar.MINUTE);
 
-
+        hr=hour;
+        mn=minute;
 
 
         long now = System.currentTimeMillis() - 1000;
@@ -181,6 +183,9 @@ public class PublicidadFragment extends Fragment  {
 
                         try {
                             int diff=getDaysDifference(date_i.getText().toString(),date_f.getText().toString());
+                            if(diff<1){
+                                diff=1;
+                            }
                             dias.setText(diff+" dias");
                             monto.setText(""+Float.parseFloat(precio.getText().toString())*diff);
 
@@ -230,6 +235,9 @@ public class PublicidadFragment extends Fragment  {
 
                         try {
                             int diff=getDaysDifference(date_i.getText().toString(),date_f.getText().toString());
+                            if(diff<1){
+                                diff=1;
+                            }
                             dias.setText(diff+" dias");
                             monto.setText(""+Float.parseFloat(precio.getText().toString())*diff);
 
@@ -269,8 +277,15 @@ public class PublicidadFragment extends Fragment  {
                       mn=minute;
                   }
               }, hour, minute, seconds, true);
-                timePickerDialog.setMinTime(hour,minute,0);
-             timePickerDialog.setMaxTime(hr2,mn2,0);
+              if(today.equals(date_f.getText().toString())){
+                  timePickerDialog.setMinTime(hour,minute,0);
+                  timePickerDialog.setMaxTime(hr2,mn2,0);
+              }else{
+                  timePickerDialog.setMinTime(0,0,0);
+                  timePickerDialog.setMaxTime(23,59,0);
+              }
+
+             //
               timePickerDialog.show(getFragmentManager(),"TimePickerDialog");
 
 
@@ -290,7 +305,15 @@ public class PublicidadFragment extends Fragment  {
                        mn2=minutef;
                    }
                }, hour, minute, seconds, true);
-               timePickerDialog.setMinTime(hr,mn,0);
+                Log.d("fecha", String.valueOf(date_i.getText().toString().equals(date_f.getText().toString())));
+               if(date_i.getText().toString().equals(date_f.getText().toString())){
+
+                   timePickerDialog.setMinTime(hr,mn,0);
+
+               }else{
+                   timePickerDialog.setMinTime(0,0,0);
+               }
+
                 timePickerDialog.show(getFragmentManager(),"TimePickerDialog");
 
             }
@@ -343,9 +366,14 @@ public class PublicidadFragment extends Fragment  {
                             public void onClick(DialogInterface dialog, int whichButton) {
                               //  Toast.makeText(getContext(), "Yes", Toast.LENGTH_SHORT).show();
                                 if(IsValid(titulo) && IsValid(descripcion) && IsValid(url)&& IsValidImage(filePath,getContext())){
+                                    if(adsId==null){
+                                        uploadMultipart();
+                                        ejecutarServicio("http://192.168.1.125:2020/APIS/patrocinador/registrarAnuncio.php");
+                                    }else{
 
-                                    uploadMultipart();
-                                    ejecutarServicio("http://192.168.1.125:2020/APIS/patrocinador/registrarAnuncio.php");
+                                        ActualizarPublicidad("http://192.168.1.125:2020/APIS/patrocinador/actualizarAnuncio.php?idanuncio="+adsId);
+                                    }
+
 
 
                                 }
@@ -358,6 +386,23 @@ public class PublicidadFragment extends Fragment  {
                // menuInicioActivity.buscarAnuncio("http://192.168.1.125:2020/APIS/patrocinador/consultaranuncio.php");
             }
         });
+
+
+        if(getArguments() !=null){
+           adsId = getArguments().getString("adsId");
+           loadAdsDetail();
+           buttonRegistrar.setText("Reactivar anuncio");
+           titulo.setEnabled(false);
+           titulo.setFocusable(false);
+           spinner_cat.setEnabled(false);
+           spinner_cat.setFocusable(false);
+           descripcion.setEnabled(false);
+           descripcion.setFocusable(false);
+           url.setEnabled(false);
+           url.setFocusable(false);
+           buttonChoose.setEnabled(false);
+
+       }
 
         return view;
     }
@@ -574,6 +619,104 @@ public class PublicidadFragment extends Fragment  {
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(stringRequest);
 
+    }
+
+    private void ActualizarPublicidad(String URL){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Reactivacion exitosa")
+                        .setPositiveButton("ok", null)
+                        .setMessage( "Su anuncio se ha reactivado exitosamente. \n"+response )
+                        .show();
+                titulo.getText().clear();
+                descripcion.getText().clear();
+                url.getText().clear();
+                monto.setText("0.00");
+
+                dias.setText("0 dias");
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(),error.toString(),Toast.LENGTH_SHORT).show();
+            }
+        }){
+
+
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+
+                Map<String,String> parametros = new HashMap<String, String>();
+
+
+
+
+                parametros.put("fechainicio",date_i.getText().toString()+" "+horainicio.getText().toString());
+                parametros.put("fechafinal",date_f.getText().toString()+" "+horafinal.getText().toString());
+                parametros.put("monto",monto.getText().toString());
+
+                return parametros;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(stringRequest);
+
+    }
+
+    private void loadAdsDetail() {
+        String urlp="http://192.168.1.125:2020/APIS/patrocinador/consultaanuncioid.php?idanuncio="+ adsId;
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, urlp, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try{
+                    JSONArray jsonarray = new JSONArray(response);
+
+                    JSONObject jsonObject =  jsonarray.getJSONObject(0);
+
+                    String titulost = jsonObject.getString("titulo");
+                    String descripcionst = jsonObject.getString("descripcion");
+                    String categoriast = jsonObject.getString("categoria");
+                    String urlst = jsonObject.getString("url");
+                    String imagenst= jsonObject.getString("imagen");
+
+
+
+                    //actionBar.setSubtitle(title);
+                    titulo.setText(titulost);
+                    descripcion.setText(descripcionst);
+                    spinner_cat.setSelection(Integer.parseInt(categoriast)-1);
+                    url.setText(urlst);
+                    filePath= Uri.parse(imagenst);
+
+                    Picasso.get().load(imagenst).into(imageView);
+
+
+
+
+                }catch (Exception e){
+                    Log.d("HOLA",e+"");
+                    Toast.makeText(getContext(),""+e.getMessage(),Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Toast.makeText(getContext(),""+error,Toast.LENGTH_SHORT).show();
+                Log.d("HOLA",error+"");
+            }
+        });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(stringRequest);
     }
 
     private String getBase64String(Bitmap bitmap)

@@ -2,14 +2,17 @@ package com.example.cliente;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,9 +25,11 @@ import com.android.volley.toolbox.Volley;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import static javax.xml.transform.OutputKeys.ENCODING;
@@ -33,23 +38,27 @@ import static javax.xml.transform.OutputKeys.ENCODING;
 public class AnuncioDetallesFragment extends Fragment {
 
     private String adsId;
-    private TextView titulotx,descripciontx,categoriatx,periodotx,urltx;
+    private TextView titulotx,descripciontx,periodotx,urltx;
     private ImageView img;
     private Button btnrenovar;
     PublicidadFragment publicidadFragment = new PublicidadFragment();
-
+    private Spinner spinner_cat;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_anuncio_detalles, container, false);
-
+        listarcategorias("http://192.168.1.125:2020/APIS/cliente/consultarcategorias.php");
         titulotx = view.findViewById(R.id.txt_tituloads);
         descripciontx = view.findViewById(R.id.txt_descripcionads);
-        categoriatx = view.findViewById(R.id.txt_categoria);
+        spinner_cat = view.findViewById(R.id.spinnercat);
         periodotx = view.findViewById(R.id.txt_dateads);
         urltx = view.findViewById(R.id.txt_urlads);
         img=view.findViewById(R.id.imgdetailad);
-        btnrenovar = view.findViewById(R.id.btn_reactivarad);
+
+
+        spinner_cat.setFocusable(false);
+        spinner_cat.setEnabled(false);
+
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
@@ -57,15 +66,13 @@ public class AnuncioDetallesFragment extends Fragment {
         }
         loadAdsDetail();
 
-        btnrenovar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
 
         return view;
     }
+
+
+
 
     private void loadAdsDetail() {
         String url="http://192.168.1.125:2020/APIS/patrocinador/consultaanuncioid.php?idanuncio="+ adsId;
@@ -92,7 +99,7 @@ public class AnuncioDetallesFragment extends Fragment {
                     //actionBar.setSubtitle(title);
                     titulotx.setText(titulo);
                     descripciontx.setText(descripcion);
-                    categoriatx.setText(categoria);
+                    spinner_cat.setSelection(Integer.parseInt(categoria)-1);
                     urltx.setText(url);
                     periodotx.setText(fecha);
                     Picasso.get().load(imagen).into(img);
@@ -118,23 +125,58 @@ public class AnuncioDetallesFragment extends Fragment {
         requestQueue.add(stringRequest);
     }
 
-    private void createFragment(Fragment fragment){
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.nav_host_fragment, fragment)
+    private void listarcategorias(String URL){
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
 
-                .commit();
-    }
-    private void showFragment(Fragment fragment){
+                JSONArray jsonArray = null;
+                try {
+                    jsonArray = new JSONArray(response);
+                    ArrayList<String> arraycat = new ArrayList<String>();
+                    Log.d("jahh20","Resp"+jsonArray.length());
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        try {
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                            String id= jsonObject1.getString("IdCategoria");
+                            String categoria = jsonObject1.getString("nombre");
 
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .show(fragment)
-                .commit();
-    }
-    private void hideFragment(Fragment fragment){
+                            Log.d("jahh20","Resp"+id+ " "+categoria);
+                            arraycat.add(id+"| "+categoria);
 
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .hide(fragment)
-                .commit();
+
+
+
+                        } catch (Exception e) {
+
+                            Toast.makeText(getContext(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Log.d("jahh20","Resp"+e.getMessage());
+
+                        }
+                    }
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item, arraycat);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner_cat.setAdapter(adapter);
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.d("jahh20","Resp"+e.getMessage());
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(),error.toString(),Toast.LENGTH_SHORT).show();
+            }
+        }){
+
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(stringRequest);
+
     }
 
 

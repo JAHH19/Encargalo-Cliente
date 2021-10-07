@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.cliente.AnuncioDetallesFragment;
+import com.example.cliente.PublicidadFragment;
 import com.example.cliente.R;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -133,10 +134,21 @@ public class AdapterAds extends RecyclerView.Adapter<AdapterAds.HolderAds>{
 
                 FragmentManager fm =   ((AppCompatActivity)context).getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
-                AnuncioDetallesFragment llf = new AnuncioDetallesFragment();
-                llf.setArguments(bundle);
-                ft.add(R.id.nav_host_fragment, llf);
-                ft.commit();
+                if(holder.estado.getText().toString()=="Estado: Activo" || holder.estado.getText().toString()== "Estado: Proximo a Salir"){
+                    AnuncioDetallesFragment llf = new AnuncioDetallesFragment();
+                    llf.setArguments(bundle);
+                    ft.add(R.id.nav_host_fragment, llf);
+                    ft.commit();
+                }else{
+                    PublicidadFragment llf = new PublicidadFragment();
+
+                    llf.setArguments(bundle);
+                    ft.add(R.id.nav_host_fragment, llf);
+                    ft.commit();
+                }
+
+
+
 
 
             }
