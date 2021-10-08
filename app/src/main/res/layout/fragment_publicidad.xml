@@ -149,17 +149,6 @@
             app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toBottomOf="@+id/textView32" />
 
-        <Spinner
-            android:id="@+id/spin_cat"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="10dp"
-            app:layout_constraintEnd_toStartOf="@+id/guideline3"
-            app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/textView21" />
-
         <EditText
             android:id="@+id/txt_titulo"
             android:layout_width="0dp"
@@ -322,7 +311,7 @@
             android:text="Seleccionar Imagen"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/spin_cat" />
+            app:layout_constraintTop_toBottomOf="@+id/txt_categoria" />
 
         <Button
             android:id="@+id/btnpago"
@@ -358,6 +347,17 @@
             android:text="Hora de inicio:"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toBottomOf="@+id/txt_date2" />
+
+        <EditText
+            android:id="@+id/txt_categoria"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

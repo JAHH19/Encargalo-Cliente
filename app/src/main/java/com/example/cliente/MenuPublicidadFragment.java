@@ -13,15 +13,15 @@ import androidx.annotation.Nullable;
 public class MenuPublicidadFragment extends Fragment {
 
     Button buttoncrear,buttonrevisar ;
-    PublicidadFragment publicidadFragment= new PublicidadFragment();
-    MisanunciosFragment misanunciosFragment = new MisanunciosFragment();
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-
+        PublicidadFragment publicidadFragment= new PublicidadFragment();
+        MisanunciosFragment misanunciosFragment = new MisanunciosFragment();
         View view =inflater.inflate(R.layout.fragment_menu_publicidad, container, false);
 
         buttoncrear = view.findViewById(R.id.btn_crearads);
