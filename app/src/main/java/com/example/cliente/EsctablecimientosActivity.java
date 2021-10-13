@@ -74,7 +74,7 @@ public class EsctablecimientosActivity extends AppCompatActivity implements Sear
     }
     private void initValues(String valor){
 
-        String URL = "http://40.124.98.26/APIS/cliente/mostrarTiendasporID.php?idrubro="+valor;
+        String URL = "http://192.168.1.125:2020/APIS/cliente/mostrarTiendasporID.php?idrubro="+valor;
         request = Volley.newRequestQueue(this);
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,URL,null,this,this);
         request.add(jsonObjectRequest);

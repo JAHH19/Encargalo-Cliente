@@ -99,7 +99,7 @@ public class DetallePedidoActivity extends AppCompatActivity implements Response
                 }
             }
         }
-        String URL = "http://40.124.98.26/APIS/cliente/mostrarDetallePedido.php?idpedido=" + idpedido;
+        String URL = "http://192.168.1.125:2020/APIS/cliente/mostrarDetallePedido.php?idpedido=" + idpedido;
         request = Volley.newRequestQueue(this);
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, URL, null, this, this);
         request.add(jsonObjectRequest);

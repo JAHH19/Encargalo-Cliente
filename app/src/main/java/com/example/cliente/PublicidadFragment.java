@@ -11,26 +11,37 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.opengl.Visibility;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckedTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,10 +69,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import com.example.cliente.adapter.FragmentosFun;
 import com.example.cliente.adapter.ModelAds;
 import com.squareup.picasso.Picasso;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -78,7 +91,8 @@ public class PublicidadFragment extends Fragment  {
    String idusuario;
    DatePickerDialog.OnDateSetListener setListener;
    MenuInicioActivity menuInicioActivity = new MenuInicioActivity();
-
+    RelativeLayout filtro;
+    ConstraintLayout publicidad;
     //Declaring views
     private Button buttonChoose;
 
@@ -101,15 +115,21 @@ public class PublicidadFragment extends Fragment  {
     public static final String UPLOAD_URL = "http://192.168.1.125:2020/APIS/patrocinador/uploadImages.php";
     Calendar calendar = Calendar.getInstance();
     String[] arraySpinner;
-    CategoriaFragment categoriaFragment = new CategoriaFragment();
+
+    CheckedTextView terminos;
+    private ListView list;
+    private EditText filter;
+    ArrayAdapter<String> adapter;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        CategoriaFragment categoriaFragment = new CategoriaFragment();
+        TerminosCondicionesFragment terminosCondicionesFragment = new TerminosCondicionesFragment();
         View view = inflater.inflate(R.layout.fragment_publicidad, container, false);
         //Cargando Elementos UI
-
+        FragmentosFun fragmentosFun = new FragmentosFun();
         date_i=(EditText) view.findViewById(R.id.txt_date2);
         date_f=(EditText) view.findViewById(R.id.txt_date);
         horainicio=(EditText)view.findViewById(R.id.txt_horai);
@@ -118,6 +138,7 @@ public class PublicidadFragment extends Fragment  {
         titulo= (EditText) view.findViewById(R.id.txt_titulo);
         url = (EditText)view.findViewById(R.id.txt_url);
         categoria = (EditText)view.findViewById(R.id.txt_categoria);
+        categoria.setFocusable(false);
         dias=(TextView)view.findViewById(R.id.txt_dias);
         monto=(TextView)view.findViewById(R.id.txtMonto);
         precio=(TextView)view.findViewById(R.id.txtprecio);
@@ -127,15 +148,46 @@ public class PublicidadFragment extends Fragment  {
 
         buttonRegistrar = (Button)view.findViewById(R.id.btnRegistrar);
         imageView = (ImageView) view.findViewById(R.id.uploadimg);
+        terminos=(CheckedTextView)view.findViewById(R.id.checkterminos);
 
-
-
-
+        filtro=(RelativeLayout)view.findViewById(R.id.lista_categorias);
+        publicidad=(ConstraintLayout)view.findViewById(R.id.layoutpublicidad);
         //Carga de datos al spinner de categorias
 
+        list = (ListView) view.findViewById(R.id.lista_cat);
+        filter = (EditText)view.findViewById(R.id.txt_filtro);
 
 
+        filter.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                (PublicidadFragment.this).adapter.getFilter().filter(s);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String cat = (String) parent.getItemAtPosition(position);
+
+
+                publicidad.setVisibility(View.VISIBLE);
+                categoria.setText(cat);
+                filtro.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        listarcategorias("http://192.168.1.125:2020/APIS/cliente/consultarcategorias.php");
 
         //Carga de datos al datepicker
 
@@ -164,20 +216,30 @@ public class PublicidadFragment extends Fragment  {
         horainicio.setText(hournow);
         horafinal.setText(hourtomorrow);
 
-        categoria.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+        categoria.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                    if(categoriaFragment.isAdded()){
-                        showFragment(categoriaFragment);
-                    }else{
-                        createFragment(categoriaFragment);
-                    }
-                }
+            public void onClick(View v) {
+                publicidad.setVisibility(View.GONE);
+                filtro.setVisibility(View.VISIBLE);
+
             }
         });
 
 
+
+        terminos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(terminosCondicionesFragment.isAdded()){
+                    fragmentosFun.showFragment(terminosCondicionesFragment,getContext());
+                }else {
+                    fragmentosFun.createFragment(terminosCondicionesFragment,getContext());
+                }
+
+            }
+        });
 
 
         date_i.setOnClickListener(new View.OnClickListener() {
@@ -410,6 +472,7 @@ public class PublicidadFragment extends Fragment  {
            titulo.setEnabled(false);
            titulo.setFocusable(false);
 
+            categoria.setEnabled(false);
            descripcion.setEnabled(false);
            descripcion.setFocusable(false);
            url.setEnabled(false);
@@ -422,23 +485,59 @@ public class PublicidadFragment extends Fragment  {
     }
 
 
-    private void createFragment(Fragment fragment){
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .add(R.id.nav_host_fragment, fragment)
 
-                .commit();
-    }
-    private void showFragment(Fragment fragment){
+    private void listarcategorias(String URL){
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
 
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .show(fragment)
-                .commit();
-    }
-    private void hideFragment(Fragment fragment){
+                JSONArray jsonArray = null;
+                try {
+                    jsonArray = new JSONArray(response);
+                    ArrayList<String> arraycat = new ArrayList<String>();
+                    Log.d("jahh20","Resp"+jsonArray.length());
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        try {
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                            String id= jsonObject1.getString("IdCategoria");
+                            String categoria = jsonObject1.getString("nombre");
 
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .hide(fragment)
-                .commit();
+                            Log.d("jahh20","Resp"+id+ " "+categoria);
+                            arraycat.add(id+"| "+categoria);
+
+
+
+
+                        } catch (Exception e) {
+
+                            Toast.makeText(getContext(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Log.d("jahh20","Resp"+e.getMessage());
+
+                        }
+                    }
+                    adapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item, arraycat);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    list.setAdapter(adapter);
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.d("jahh20","Resp"+e.getMessage());
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(),error.toString(),Toast.LENGTH_SHORT).show();
+            }
+        }){
+
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(stringRequest);
+
     }
 
     public void uploadMultipart() {
@@ -663,7 +762,7 @@ public class PublicidadFragment extends Fragment  {
 
                     String titulost = jsonObject.getString("titulo");
                     String descripcionst = jsonObject.getString("descripcion");
-                    String categoriast = jsonObject.getString("categoria");
+                    String categoriast = jsonObject.getString("nombcat");
                     String urlst = jsonObject.getString("url");
                     String imagenst= jsonObject.getString("imagen");
 
@@ -672,7 +771,7 @@ public class PublicidadFragment extends Fragment  {
                     //actionBar.setSubtitle(title);
                     titulo.setText(titulost);
                     descripcion.setText(descripcionst);
-                    categoria.setText(Integer.parseInt(categoriast)-1);
+                    categoria.setText(categoriast);
                     url.setText(urlst);
                     filePath= Uri.parse(imagenst);
 
@@ -761,11 +860,7 @@ public class PublicidadFragment extends Fragment  {
         return valido;
     };
 
-    public void CargarCategoria(Activity activity){
-        String cat1="hola";
-        categoria = (EditText)activity.findViewById(R.id.txt_categoria);
-        categoria.setText(cat1);
-    }
+
 
 
 }

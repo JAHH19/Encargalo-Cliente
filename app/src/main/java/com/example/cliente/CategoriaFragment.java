@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -23,6 +24,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.cliente.adapter.FragmentosFun;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,13 +40,17 @@ public class CategoriaFragment extends Fragment {
     private EditText filter;
     ArrayAdapter<String> adapter;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        FragmentosFun fragmentosFun = new FragmentosFun();
+        PublicidadFragment publicidadFragment =new PublicidadFragment();
         View view = inflater.inflate(R.layout.fragment_categoria, container, false);
         list = (ListView) view.findViewById(R.id.listcategory);
         filter = (EditText)view.findViewById(R.id.searchcategory);
+
+
 
         filter.addTextChangedListener(new TextWatcher() {
             @Override
@@ -69,10 +75,12 @@ public class CategoriaFragment extends Fragment {
                 String cat = (String) parent.getItemAtPosition(position);
 
 
-                PublicidadFragment publicidadFragment = new PublicidadFragment();
-               publicidadFragment.CargarCategoria(publicidadFragment.getActivity());
+                fragmentosFun.Setdato(cat);
 
-                hideFragment(CategoriaFragment.this);
+
+
+                fragmentosFun.hideFragment(CategoriaFragment.this,getContext());
+
             }
         });
 
@@ -135,10 +143,13 @@ public class CategoriaFragment extends Fragment {
 
     }
 
-    private void hideFragment(Fragment fragment){
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        if(hidden){
+            Log.d("hola","sdasd sdsa asd");
 
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .hide(fragment)
-                .commit();
+
+        }
+
     }
 }

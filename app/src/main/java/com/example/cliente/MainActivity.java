@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);
                 Toast.makeText(MainActivity.this, "¡Autenticación exitosa!", Toast.LENGTH_SHORT).show();
-                validarUsuario("http://40.124.98.26/APIS/cliente/validarusuario.php");
+                validarUsuario("http://192.168.1.125:2020/APIS/cliente/validarusuario.php");
             }
 
             @Override

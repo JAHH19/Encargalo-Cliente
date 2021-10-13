@@ -1,5 +1,6 @@
 package com.example.cliente;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,10 @@ import android.widget.Button;
 import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.example.cliente.adapter.FragmentosFun;
 
 public class MenuPublicidadFragment extends Fragment {
 
@@ -20,6 +25,8 @@ public class MenuPublicidadFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
+        FragmentosFun fragmentosFun = new FragmentosFun();
         PublicidadFragment publicidadFragment= new PublicidadFragment();
         MisanunciosFragment misanunciosFragment = new MisanunciosFragment();
         View view =inflater.inflate(R.layout.fragment_menu_publicidad, container, false);
@@ -30,36 +37,34 @@ public class MenuPublicidadFragment extends Fragment {
         buttoncrear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createFragment(publicidadFragment);
+
+                if(publicidadFragment.isAdded()){
+                    fragmentosFun.showFragment(publicidadFragment,getContext());
+                }else{
+                    fragmentosFun.createFragment(publicidadFragment,getContext());
+
+                }
+
             }
         });
 
         buttonrevisar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createFragment(misanunciosFragment);
+
+                if(misanunciosFragment.isAdded()){
+                    fragmentosFun.showFragment(misanunciosFragment,getContext());
+
+                }else{
+                    fragmentosFun.createFragment(misanunciosFragment,getContext());
+
+                }
+
             }
         });
 
         return view;
     }
 
-    private void createFragment(Fragment fragment){
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .add(R.id.nav_host_fragment, fragment)
 
-                .commit();
-    }
-    private void showFragment(Fragment fragment){
-
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .show(fragment)
-                .commit();
-    }
-    private void hideFragment(Fragment fragment){
-
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .hide(fragment)
-                .commit();
-    }
 }

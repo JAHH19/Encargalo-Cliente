@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -54,6 +55,16 @@ public class MenuInicioActivity extends AppCompatActivity implements Response.Er
 
     ArrayList<String> anuncios = new ArrayList<String>();
     ArrayList<String> urls = new ArrayList<String>();
+
+    String TabFragmentPublicidad;
+
+    public void setTabFragmentPublicidad(String t){
+        TabFragmentPublicidad=t;
+    }
+
+    public String getTabFragmentPublicidad(){
+        return TabFragmentPublicidad;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,7 +111,7 @@ public class MenuInicioActivity extends AppCompatActivity implements Response.Er
 
 
 
-            buscarAnuncio("http://192.168.1.125:2020/APIS/patrocinador/consultaranuncio.php");
+            buscarAnuncio("http://192.168.1.125:2020/APIS/patrocinador/consultaranuncio.php?idusuario="+idusuario);
 
 
 
@@ -198,7 +209,7 @@ public class MenuInicioActivity extends AppCompatActivity implements Response.Er
             @Override
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject = null;
-
+                Log.d("HOLA",response+"");
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         jsonObject = response.getJSONObject(i);
@@ -214,7 +225,8 @@ public class MenuInicioActivity extends AppCompatActivity implements Response.Er
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(),"Error de conexion",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Error de conexion"+error,Toast.LENGTH_SHORT).show();
+                error.printStackTrace();
             }
         });
         requestQueue=Volley.newRequestQueue(this);
@@ -223,7 +235,7 @@ public class MenuInicioActivity extends AppCompatActivity implements Response.Er
 
     @Override
     protected void onResume() {
-        buscarAnuncio("http://192.168.1.125:2020/APIS/patrocinador/consultaranuncio.php");
+        buscarAnuncio("http://192.168.1.125:2020/APIS/patrocinador/consultaranuncio.php?idusuario="+idusuario);
         adcontainer.setVisibility(View.VISIBLE);
         super.onResume();
     }

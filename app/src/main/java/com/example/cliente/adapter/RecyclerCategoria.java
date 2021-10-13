@@ -59,7 +59,7 @@ public class RecyclerCategoria extends RecyclerView.Adapter<RecyclerCategoria.Re
         holder.tvCategoria.setText(item.getCategoria());
         idtienda = item.getIdTienda();
         categoria=item.getCategoria();
-        String URL = "http://40.124.98.26/APIS/cliente/ListarProductosporCat.php?idtienda="+idtienda+"&categoria="+categoria;
+        String URL = "http://192.168.1.125:2020/APIS/cliente/ListarProductosporCat.php?idtienda="+idtienda+"&categoria="+categoria;
         StringRequest requesty = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

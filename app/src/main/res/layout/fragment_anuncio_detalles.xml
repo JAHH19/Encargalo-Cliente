@@ -102,7 +102,7 @@
             android:layout_marginTop="20dp"
             android:text="Descripción:"
             app:layout_constraintStart_toStartOf="@+id/guideline5"
-            app:layout_constraintTop_toBottomOf="@+id/spinnercat" />
+            app:layout_constraintTop_toBottomOf="@+id/txtcategoria" />
 
 
         <androidx.constraintlayout.widget.Guideline
@@ -121,11 +121,12 @@
             app:layout_constraintGuide_begin="337dp"
             app:layout_constraintGuide_percent="0.9" />
 
-        <Spinner
-            android:id="@+id/spinnercat"
+        <TextView
+            android:id="@+id/txtcategoria"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:text="Aqui va categoria"
             app:layout_constraintEnd_toStartOf="@+id/guideline6"
             app:layout_constraintStart_toStartOf="@+id/guideline5"
             app:layout_constraintTop_toBottomOf="@+id/textView45" />

@@ -32,8 +32,8 @@ public class MisanunciosFragment extends Fragment {
 
     private RecyclerView adsRv;
     private Button loadMoreBtn,btnadsdetail;
-
-    private String url="http://192.168.1.125:2020/APIS/patrocinador/consultaanuncioespf.php?idusuario=abc";
+    String idusuario;
+    private String url;
     private String nextToken="";
 
     private ArrayList<ModelAds> adsArrayList;
@@ -49,7 +49,7 @@ public class MisanunciosFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_misanuncios, container, false);
-
+        idusuario= getActivity().getIntent().getExtras().getString("idusuario");
 
         adsRv = view.findViewById(R.id.adsRv);
         loadMoreBtn = view.findViewById(R.id.btnmore);
@@ -62,6 +62,7 @@ public class MisanunciosFragment extends Fragment {
         adsArrayList.clear();
 
 
+        url="http://192.168.1.125:2020/APIS/patrocinador/consultaanuncioespf.php?idusuario="+idusuario;
         loadAds();
         loadMoreBtn.setOnClickListener(new View.OnClickListener() {
             @Override
