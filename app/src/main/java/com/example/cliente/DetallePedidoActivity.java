@@ -23,6 +23,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.cliente.Model.ItemListDetallePedido;
 import com.example.cliente.Model.ItemListHistorialPedidos;
+import com.example.cliente.adapter.IPConfig;
 import com.example.cliente.adapter.RecyclerDetallePedido;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -99,7 +100,7 @@ public class DetallePedidoActivity extends AppCompatActivity implements Response
                 }
             }
         }
-        String URL = "http://192.168.1.125:2020/APIS/cliente/mostrarDetallePedido.php?idpedido=" + idpedido;
+        String URL = "http://"+ IPConfig.ipServidor +"cliente/mostrarDetallePedido.php?idpedido=" + idpedido;
         request = Volley.newRequestQueue(this);
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, URL, null, this, this);
         request.add(jsonObjectRequest);

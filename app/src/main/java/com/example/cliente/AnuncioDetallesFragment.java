@@ -22,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.cliente.adapter.IPConfig;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -74,7 +75,7 @@ public class AnuncioDetallesFragment extends Fragment {
 
 
     private void loadAdsDetail() {
-        String url="http://192.168.1.125:2020/APIS/patrocinador/consultaanuncioid.php?idanuncio="+ adsId;
+        String url="http://"+ IPConfig.ipServidor +"patrocinador/consultaanuncioid.php?idanuncio="+ adsId;
 
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {

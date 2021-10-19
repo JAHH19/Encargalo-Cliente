@@ -21,6 +21,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.cliente.Model.ItemListEsta;
 import com.example.cliente.Model.ItemListHistorialPedidos;
 import com.example.cliente.adapter.Adaptador;
+import com.example.cliente.adapter.IPConfig;
 import com.example.cliente.adapter.RecyclerHistorialPedidos;
 
 import org.json.JSONArray;
@@ -92,7 +93,7 @@ public class MisPedidosFragment extends Fragment implements Response.ErrorListen
 
         SharedPreferences preferencia = this.getContext().getSharedPreferences("ARCHIVOREG", Context.MODE_PRIVATE);
         String usuario = preferencia.getString("usuario","");
-        String URL = "http://192.168.1.125:2020/APIS/cliente/listarHistorialPedidos.php?idusuario="+usuario;
+        String URL = "http://"+ IPConfig.ipServidor +"/cliente/listarHistorialPedidos.php?idusuario="+usuario;
         request = Volley.newRequestQueue(getContext());
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,URL,null,this,this);
         request.add(jsonObjectRequest);

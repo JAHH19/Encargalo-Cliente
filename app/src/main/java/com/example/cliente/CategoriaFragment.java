@@ -25,6 +25,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.cliente.adapter.FragmentosFun;
+import com.example.cliente.adapter.IPConfig;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -84,7 +85,7 @@ public class CategoriaFragment extends Fragment {
             }
         });
 
-        listarcategorias("http://192.168.1.125:2020/APIS/cliente/consultarcategorias.php");
+        listarcategorias("http://"+ IPConfig.ipServidor +"cliente/consultarcategorias.php");
         // Inflate the layout for this fragment
         return view;
     }

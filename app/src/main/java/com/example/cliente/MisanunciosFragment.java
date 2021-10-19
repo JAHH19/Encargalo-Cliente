@@ -20,6 +20,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.cliente.adapter.AdapterAds;
+import com.example.cliente.adapter.IPConfig;
 import com.example.cliente.adapter.ModelAds;
 
 import org.json.JSONArray;
@@ -62,7 +63,7 @@ public class MisanunciosFragment extends Fragment {
         adsArrayList.clear();
 
 
-        url="http://192.168.1.125:2020/APIS/patrocinador/consultaanuncioespf.php?idusuario="+idusuario;
+        url="http://"+ IPConfig.ipServidor +"patrocinador/consultaanuncioespf.php?idusuario="+idusuario;
         loadAds();
         loadMoreBtn.setOnClickListener(new View.OnClickListener() {
             @Override

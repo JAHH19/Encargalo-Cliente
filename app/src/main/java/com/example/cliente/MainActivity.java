@@ -21,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.cliente.adapter.IPConfig;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);
                 Toast.makeText(MainActivity.this, "¡Autenticación exitosa!", Toast.LENGTH_SHORT).show();
-                validarUsuario("http://192.168.1.125:2020/APIS/cliente/validarusuario.php");
+                validarUsuario("http://"+ IPConfig.ipServidor +"cliente/validarusuario.php");
             }
 
             @Override

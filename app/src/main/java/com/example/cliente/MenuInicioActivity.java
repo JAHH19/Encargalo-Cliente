@@ -20,6 +20,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.cliente.adapter.IPConfig;
 import com.google.android.material.navigation.NavigationView;
 import com.squareup.picasso.Picasso;
 
@@ -111,7 +112,7 @@ public class MenuInicioActivity extends AppCompatActivity implements Response.Er
 
 
 
-            buscarAnuncio("http://192.168.1.125:2020/APIS/patrocinador/consultaranuncio.php?idusuario="+idusuario);
+            buscarAnuncio("http://"+ IPConfig.ipServidor +"patrocinador/consultaranuncio.php?idusuario="+idusuario);
 
 
 
@@ -178,7 +179,7 @@ public class MenuInicioActivity extends AppCompatActivity implements Response.Er
     }
     public  void updateNavHeader(){
         idusu = getIntent().getStringExtra("idusuario");
-        String URL = "http://192.168.1.125:2020/APIS/cliente/consultarNombreUbicacionusuario.php?idusuario="+idusu;
+        String URL = "http://"+ IPConfig.ipServidor +"cliente/consultarNombreUbicacionusuario.php?idusuario="+idusu;
         URL = URL.replace(" ", "%20");
         request = Volley.newRequestQueue(this);
         jsonObjectRequest = new  JsonObjectRequest(Request.Method.GET,URL,null,this,this);
@@ -235,7 +236,7 @@ public class MenuInicioActivity extends AppCompatActivity implements Response.Er
 
     @Override
     protected void onResume() {
-        buscarAnuncio("http://192.168.1.125:2020/APIS/patrocinador/consultaranuncio.php?idusuario="+idusuario);
+        buscarAnuncio("http://"+ IPConfig.ipServidor +"patrocinador/consultaranuncio.php?idusuario="+idusuario);
         adcontainer.setVisibility(View.VISIBLE);
         super.onResume();
     }

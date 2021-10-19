@@ -70,6 +70,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import com.example.cliente.adapter.FragmentosFun;
+import com.example.cliente.adapter.IPConfig;
 import com.example.cliente.adapter.ModelAds;
 import com.squareup.picasso.Picasso;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
@@ -95,7 +96,7 @@ public class PublicidadFragment extends Fragment  {
     ConstraintLayout publicidad;
     //Declaring views
     private Button buttonChoose;
-
+    private Button buttonPagar;
     private Button buttonRegistrar;
     private ImageView imageView;
 
@@ -112,7 +113,7 @@ public class PublicidadFragment extends Fragment  {
     private Bitmap bitmap;
     String adsId;
     private Uri filePath;
-    public static final String UPLOAD_URL = "http://192.168.1.125:2020/APIS/patrocinador/uploadImages.php";
+    public static final String UPLOAD_URL = "http://"+ IPConfig.ipServidor +"patrocinador/uploadImages.php";
     Calendar calendar = Calendar.getInstance();
     String[] arraySpinner;
 
@@ -126,6 +127,7 @@ public class PublicidadFragment extends Fragment  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         CategoriaFragment categoriaFragment = new CategoriaFragment();
+        PagoPublicidadFragment pagoPublicidadFragment = new PagoPublicidadFragment();
         TerminosCondicionesFragment terminosCondicionesFragment = new TerminosCondicionesFragment();
         View view = inflater.inflate(R.layout.fragment_publicidad, container, false);
         //Cargando Elementos UI
@@ -145,7 +147,7 @@ public class PublicidadFragment extends Fragment  {
         idusuario = getActivity().getIntent().getExtras().getString("idusuario");
 
         buttonChoose = (Button) view.findViewById(R.id.buttonChoose);
-
+        buttonPagar = (Button) view.findViewById(R.id.btnpago);
         buttonRegistrar = (Button)view.findViewById(R.id.btnRegistrar);
         imageView = (ImageView) view.findViewById(R.id.uploadimg);
         terminos=(CheckedTextView)view.findViewById(R.id.checkterminos);
@@ -157,6 +159,17 @@ public class PublicidadFragment extends Fragment  {
         list = (ListView) view.findViewById(R.id.lista_cat);
         filter = (EditText)view.findViewById(R.id.txt_filtro);
 
+        buttonPagar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(pagoPublicidadFragment.isAdded()){
+                    fragmentosFun.showFragment(pagoPublicidadFragment,getContext());
+                }else{
+                    fragmentosFun.createFragment(pagoPublicidadFragment,getContext());
+                }
+
+            }
+        });
 
         filter.addTextChangedListener(new TextWatcher() {
             @Override
@@ -187,7 +200,7 @@ public class PublicidadFragment extends Fragment  {
             }
         });
 
-        listarcategorias("http://192.168.1.125:2020/APIS/cliente/consultarcategorias.php");
+        listarcategorias("http://"+ IPConfig.ipServidor +"cliente/consultarcategorias.php");
 
         //Carga de datos al datepicker
 
@@ -445,10 +458,10 @@ public class PublicidadFragment extends Fragment  {
                                 if(IsValid(titulo) && IsValid(descripcion) && IsValid(url)&& IsValidImage(filePath,getContext())){
                                     if(adsId==null){
                                         uploadMultipart();
-                                        ejecutarServicio("http://192.168.1.125:2020/APIS/patrocinador/registrarAnuncio.php");
+                                        ejecutarServicio("http://"+ IPConfig.ipServidor +"patrocinador/registrarAnuncio.php");
                                     }else{
 
-                                        ActualizarPublicidad("http://192.168.1.125:2020/APIS/patrocinador/actualizarAnuncio.php?idanuncio="+adsId);
+                                        ActualizarPublicidad("http://"+ IPConfig.ipServidor +"patrocinador/actualizarAnuncio.php?idanuncio="+adsId);
                                     }
 
 
@@ -748,7 +761,7 @@ public class PublicidadFragment extends Fragment  {
     }
 
     private void loadAdsDetail() {
-        String urlp="http://192.168.1.125:2020/APIS/patrocinador/consultaanuncioid.php?idanuncio="+ adsId;
+        String urlp="http://"+ IPConfig.ipServidor +"patrocinador/consultaanuncioid.php?idanuncio="+ adsId;
 
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, urlp, new Response.Listener<String>() {

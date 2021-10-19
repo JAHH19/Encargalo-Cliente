@@ -21,6 +21,7 @@ import com.example.cliente.Database.Database;
 import com.example.cliente.Model.ItemListCategoria;
 import com.example.cliente.Model.ItemListEsta;
 import com.example.cliente.Model.ItemListOrder;
+import com.example.cliente.adapter.IPConfig;
 import com.example.cliente.adapter.RecyclerCategoria;
 
 import org.json.JSONArray;
@@ -105,7 +106,7 @@ public class MostrarProductosTienda extends AppCompatActivity implements Respons
         idtienda = itemDetail.getId_tienda();
 
 
-        String URL = "http://192.168.1.125:2020/APIS/cliente/ListarCategoriaporID.php?idtienda="+idtienda;
+        String URL = "http://"+ IPConfig.ipServidor +"cliente/ListarCategoriaporID.php?idtienda="+idtienda;
         request = Volley.newRequestQueue(this);
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,URL,null,this,this);
         request.add(jsonObjectRequest);

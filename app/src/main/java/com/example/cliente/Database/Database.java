@@ -15,6 +15,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.cliente.ConfirmarPedidoActivity;
 import com.example.cliente.Model.ItemListOrder;
+import com.example.cliente.adapter.IPConfig;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 import java.util.ArrayList;
@@ -23,6 +24,19 @@ import java.util.List;
 public class Database extends SQLiteAssetHelper {
     private static final String DB_NAME="DetailDB.db";
     private static final int DB_VER=1;
+
+
+    private static Database sInstance;
+    public static synchronized Database getInstance(Context context) {
+
+        // Use the application context, which will ensure that you
+        // don't accidentally leak an Activity's context.
+        // See this article for more information: http://bit.ly/6LRzfx
+        if (sInstance == null) {
+            sInstance = new Database(context.getApplicationContext());
+        }
+        return sInstance;
+    }
     public Database(Context context) {
         super(context, DB_NAME,null, DB_VER);
     }
@@ -81,7 +95,7 @@ public class Database extends SQLiteAssetHelper {
 
         cart = new Database(activity).getProductosPedidos();
         for (ItemListOrder order:cart){
-            String URL2 = "http://192.168.1.125:2020/APIS/cliente/ingresarlistapedido.php?idtiendaproducto="+order.getIdProducto()+"&idpedido="+idpedido+"&cantidad="+order.getCant()+"&preciouniMX="+order.getPrecio()+"&subtotal="+String.valueOf((Double.parseDouble(order.getCant())*Double.parseDouble(order.getPrecio())*100)/100.0);
+            String URL2 = "http://"+ IPConfig.ipServidor +"cliente/ingresarlistapedido.php?idtiendaproducto="+order.getIdProducto()+"&idpedido="+idpedido+"&cantidad="+order.getCant()+"&preciouniMX="+order.getPrecio()+"&subtotal="+String.valueOf((Double.parseDouble(order.getCant())*Double.parseDouble(order.getPrecio())*100)/100.0);
             StringRequest request2 = new StringRequest(Request.Method.GET, URL2, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
