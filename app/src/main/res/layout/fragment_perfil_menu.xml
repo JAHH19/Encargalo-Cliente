@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
     tools:context=".Fragment_perfil_menu">
 
     <LinearLayout
@@ -50,6 +51,7 @@
         android:layout_weight="0.6"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
+        android:background="@color/white"
         android:orientation="vertical">
 
         <LinearLayout

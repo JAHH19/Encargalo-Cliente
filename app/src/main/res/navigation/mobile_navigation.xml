@@ -67,4 +67,14 @@
         android:name="com.example.cliente.CategoriaFragment"
         android:label="Mis anuncios"
         tools:layout="@layout/fragment_categoria" />
+    <fragment
+        android:id="@+id/nav_menumembresia"
+        android:name="com.example.cliente.MembresiaFragment"
+        android:label="Membresia"
+        tools:layout="@layout/fragment_membresia" />
+    <fragment
+        android:id="@+id/nav_menupromociones"
+        android:name="com.example.cliente.PromocionesFragment"
+        android:label="Promociones"
+        tools:layout="@layout/fragment_promociones" />
 </navigation>

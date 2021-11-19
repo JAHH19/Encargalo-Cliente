@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/titlepromo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="0dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="15dp"
+        android:text="Titulo"
+        android:textColor="@color/btnblue"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/datepromo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/titlepromo"
+        android:paddingLeft="20dp"
+        android:paddingTop="5dp"
+        android:text="Desde 27/08/02 hasta 27/08/02"
+        android:textColor="#43A047" />
+
+    <ImageView
+        android:id="@+id/imagepromo"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_below="@+id/datepromo"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="18dp"
+        android:adjustViewBounds="true"
+        android:background="#939292"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_image_black" />
+
+    <TextView
+        android:id="@+id/idtiendatxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:visibility="invisible" />
+
+</RelativeLayout>

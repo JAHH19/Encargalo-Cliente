@@ -1,5 +1,6 @@
 package com.example.cliente;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,10 +21,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.cliente.adapter.FragmentosFun;
 import com.example.cliente.adapter.IPConfig;
 import com.google.android.material.navigation.NavigationView;
 import com.squareup.picasso.Picasso;
 
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -56,7 +60,7 @@ public class MenuInicioActivity extends AppCompatActivity implements Response.Er
 
     ArrayList<String> anuncios = new ArrayList<String>();
     ArrayList<String> urls = new ArrayList<String>();
-
+    FragmentosFun fragmentosFun = new FragmentosFun();
     String TabFragmentPublicidad;
 
     public void setTabFragmentPublicidad(String t){
@@ -75,7 +79,7 @@ public class MenuInicioActivity extends AppCompatActivity implements Response.Er
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-
+        Fragment_perfil_menu fragment_perfil_menu = new Fragment_perfil_menu();
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -100,6 +104,8 @@ public class MenuInicioActivity extends AppCompatActivity implements Response.Er
         adimage=findViewById(R.id.imagead);
         adcontainer = findViewById(R.id.adcontainer);
         btncerrarad = findViewById(R.id.btn_cerrarad);
+
+
 
         btncerrarad.setOnClickListener(new View.OnClickListener() {
             @Override

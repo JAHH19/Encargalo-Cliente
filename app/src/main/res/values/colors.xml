@@ -11,7 +11,9 @@
     <color name="gris">#30cbcbcb</color>
     <color name="rojo">#e3001b</color>
     <color name="black">#000000</color>
-
-
+    <color name="btnred">#C51B34</color>
+    <color name="btnblue">#2B51AF</color>
+    <color name="btngreen">#4CAF50</color>
+    <color name="btnselected">#1a1a00</color>
 
 </resources>

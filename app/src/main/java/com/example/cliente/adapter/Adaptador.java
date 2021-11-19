@@ -39,20 +39,23 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.RecyclerHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerHolder holder, int position) {
-        ItemListEsta item = items.get(position);
-        holder.imagEsta.setImageResource(item.getImag_tienda());
-        holder.tvNomEsta.setText(item.getNom_tienda());
-        holder.tvUbicacion.setText(item.getUbicacion());
-        holder.tvCalific.setText(item.getCalific()+"");
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(holder.itemView.getContext(), MostrarProductosTienda.class);
-                intent.putExtra("item",item);
-                holder.itemView.getContext().startActivity(intent);
-                new Database(holder.itemView.getContext()).cleanLista();
-            }
-        });
+
+            ItemListEsta item = items.get(position);
+            holder.imagEsta.setImageResource(item.getImag_tienda());
+            holder.tvNomEsta.setText(item.getNom_tienda());
+            holder.tvUbicacion.setText(item.getUbicacion());
+            holder.tvCalific.setText(item.getCalific()+"");
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(holder.itemView.getContext(), MostrarProductosTienda.class);
+                    intent.putExtra("item",item);
+                    holder.itemView.getContext().startActivity(intent);
+                    new Database(holder.itemView.getContext()).cleanLista();
+                }
+            });
+
+
     }
 
     @Override

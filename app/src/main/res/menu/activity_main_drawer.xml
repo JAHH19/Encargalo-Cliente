@@ -5,9 +5,17 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_mi_perfil"
+            android:icon="@drawable/ic_image_perfil"
+            android:title="Mi perfil" />
+        <item
             android:id="@+id/nav_comprar"
             android:icon="@drawable/ic_baseline_shopping_cart"
             android:title="Comprar" />
+        <item
+            android:id="@+id/nav_menupromociones"
+            android:icon="@drawable/ic_image_promos"
+            android:title="Promociones" />
         <item
             android:id="@+id/nav_mis_pedidos"
             android:icon="@drawable/ic_baseline_list_alt"
@@ -16,10 +24,16 @@
             android:id="@+id/nav_notificaciones"
             android:icon="@drawable/ic_baseline_notifications"
             android:title="Notificaciones" />
+
         <item
             android:id="@+id/nav_menupublicidad"
             android:icon="@drawable/ic_action_campaign"
             android:title="Publicitar" />
+
+        <item
+            android:id="@+id/nav_menumembresia"
+            android:icon="@drawable/ic_image_member"
+            android:title="Membresia" />
 
     </group>
     <item android:title="  ">

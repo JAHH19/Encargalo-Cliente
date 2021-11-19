@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MembresiaFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="wrap_content">
+
+        <CheckedTextView
+            android:id="@+id/checkterminos2"
+            android:layout_width="275dp"
+            android:layout_height="37dp"
+            android:layout_marginTop="20dp"
+            android:clickable="true"
+            android:gravity="center_vertical|right"
+            android:padding="10dp"
+            android:text="Acepto los terminos y condiciones."
+            android:textColor="@color/azul_100"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.698"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnpremium" />
+
+        <CheckBox
+            android:id="@+id/chbterminos2"
+            android:layout_width="39dp"
+            android:layout_height="37dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toStartOf="@+id/checkterminos2"
+            app:layout_constraintHorizontal_bias="0.732"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnpremium" />
+
+        <Button
+            android:id="@+id/btnbasico"
+            android:layout_width="329dp"
+            android:layout_height="165dp"
+            android:layout_marginTop="20dp"
+            android:background="#C51B34"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView48" />
+
+        <Button
+            android:id="@+id/btnmedio"
+            android:layout_width="329dp"
+            android:layout_height="165dp"
+            android:layout_marginTop="20dp"
+            android:background="#2B51AF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnbasico" />
+
+        <Button
+            android:id="@+id/btnpremium"
+            android:layout_width="329dp"
+            android:layout_height="165dp"
+            android:layout_marginTop="20dp"
+            android:background="#4CAF50"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnmedio" />
+
+        <TextView
+            android:id="@+id/textView49"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:elevation="10dp"
+            android:text="Basico $25"
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/btnbasico"
+            app:layout_constraintTop_toTopOf="@+id/btnbasico" />
+
+        <TextView
+            android:id="@+id/txtsuscrito"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:elevation="10dp"
+            android:text="Suscrito"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="@+id/btnbasico"
+            app:layout_constraintTop_toTopOf="@+id/btnbasico" />
+
+        <TextView
+            android:id="@+id/txtsuscrito2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:elevation="10dp"
+            android:text="Suscrito"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="@+id/btnmedio"
+            app:layout_constraintTop_toTopOf="@+id/btnmedio" />
+
+        <TextView
+            android:id="@+id/txtsuscrito3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:elevation="10dp"
+            android:text="Suscrito"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="@+id/btnpremium"
+            app:layout_constraintTop_toTopOf="@+id/btnpremium" />
+
+        <TextView
+            android:id="@+id/textView51"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:elevation="10dp"
+            android:text="Medio $50"
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/btnmedio"
+            app:layout_constraintTop_toTopOf="@+id/btnmedio" />
+
+        <TextView
+            android:id="@+id/textView53"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:elevation="10dp"
+            android:text="Premium $100"
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/btnpremium"
+            app:layout_constraintTop_toTopOf="@+id/btnpremium" />
+
+        <TextView
+            android:id="@+id/textView50"
+            android:layout_width="209dp"
+            android:layout_height="87dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:elevation="10dp"
+            android:justificationMode="inter_word"
+            android:text="Disfruta de los siguientes beneficios al ser parte de nuestro plan Básico podras acceder al beneficio 1, beneficio 2 y beneficio 3."
+            android:textColor="@color/white"
+            android:padding="5dp"
+            android:textSize="13dp"
+            app:layout_constraintBottom_toBottomOf="@+id/btnbasico"
+            app:layout_constraintStart_toStartOf="@+id/btnbasico"
+            app:layout_constraintTop_toBottomOf="@+id/textView49"
+            app:layout_constraintVertical_bias="0.36" />
+
+        <TextView
+            android:id="@+id/textView52"
+            android:layout_width="209dp"
+            android:layout_height="87dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:elevation="10dp"
+            android:justificationMode="inter_word"
+            android:padding="5dp"
+            android:text="Disfruta de los siguientes beneficios al ser parte de nuestro plan Básico podras acceder al beneficio 1, beneficio 2 y beneficio 3."
+            android:textColor="@color/white"
+            android:textSize="13dp"
+            app:layout_constraintStart_toStartOf="@+id/btnmedio"
+            app:layout_constraintTop_toBottomOf="@+id/textView51" />
+
+        <TextView
+            android:id="@+id/textView54"
+            android:layout_width="209dp"
+            android:layout_height="87dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:elevation="10dp"
+            android:justificationMode="inter_word"
+            android:padding="5dp"
+            android:text="Disfruta de los siguientes beneficios al ser parte de nuestro plan Básico podras acceder al beneficio 1, beneficio 2 y beneficio 3."
+            android:textColor="@color/white"
+            android:textSize="13dp"
+            app:layout_constraintStart_toStartOf="@+id/btnpremium"
+            app:layout_constraintTop_toBottomOf="@+id/textView53" />
+
+        <TextView
+            android:id="@+id/textView46"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Unete a nuestra Membresia"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView48"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Selecciona tu membresia"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView46" />
+
+        <Button
+            android:id="@+id/btnmpago"
+            android:layout_width="176dp"
+            android:layout_height="43dp"
+            android:layout_marginTop="20dp"
+            android:text="Realizar pago"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkterminos2" />
+
+        <Button
+            android:id="@+id/btnmreg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="Registrar mi membresia"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnmpago" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

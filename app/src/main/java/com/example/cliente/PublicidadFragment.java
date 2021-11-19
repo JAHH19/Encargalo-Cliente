@@ -62,6 +62,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -692,9 +693,10 @@ public class PublicidadFragment extends Fragment  {
 
                 Map<String,String> parametros = new HashMap<String, String>();
                 String categorias = categoria.getText().toString();
-                String[] cat=categorias.split("|");
 
-                parametros.put("categoria",cat[1]);
+                String[] cat=categorias.split("\\|");
+                Log.d("arryase",cat[0]+" "+cat[1]);
+                parametros.put("categoria",cat[0]);
                 parametros.put("titulo",titulo.getText().toString());
                 parametros.put("descr",descripcion.getText().toString());
                 parametros.put("image",imagenString);
