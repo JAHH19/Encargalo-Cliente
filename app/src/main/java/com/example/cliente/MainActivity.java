@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);
                 Toast.makeText(MainActivity.this, "¡Autenticación exitosa!", Toast.LENGTH_SHORT).show();
-                validarUsuario("http://"+ IPConfig.ipServidor +"cliente/validarusuario.php");
+                validarUsuario( IPConfig.ipServidor +"cliente/validarusuario.php");
             }
 
             @Override

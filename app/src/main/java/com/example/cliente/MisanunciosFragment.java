@@ -63,7 +63,7 @@ public class MisanunciosFragment extends Fragment {
         adsArrayList.clear();
 
 
-        url="http://"+ IPConfig.ipServidor +"patrocinador/consultaanuncioespf.php?idusuario="+idusuario;
+        url=IPConfig.ipServidor +"patrocinador/consultaanuncioespf.php?idusuario="+idusuario;
         loadAds();
         loadMoreBtn.setOnClickListener(new View.OnClickListener() {
             @Override

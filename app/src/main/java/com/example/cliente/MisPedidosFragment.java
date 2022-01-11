@@ -93,7 +93,7 @@ public class MisPedidosFragment extends Fragment implements Response.ErrorListen
 
         SharedPreferences preferencia = this.getContext().getSharedPreferences("ARCHIVOREG", Context.MODE_PRIVATE);
         String usuario = preferencia.getString("usuario","");
-        String URL = "http://"+ IPConfig.ipServidor +"/cliente/listarHistorialPedidos.php?idusuario="+usuario;
+        String URL = IPConfig.ipServidor +"/cliente/listarHistorialPedidos.php?idusuario="+usuario;
         request = Volley.newRequestQueue(getContext());
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,URL,null,this,this);
         request.add(jsonObjectRequest);

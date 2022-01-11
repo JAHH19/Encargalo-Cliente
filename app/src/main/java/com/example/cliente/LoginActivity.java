@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         //edtPassword.setText(shpreferences.getString("pass",""));
 
         btnIngresar.setOnClickListener(v -> {
-            validarUsuario("http://"+ IPConfig.ipServidor +"cliente/validarusuario.php");
+            validarUsuario( IPConfig.ipServidor +"cliente/validarusuario.php");
             SharedPreferences shpreferencias = getSharedPreferences("ARCHIVOREG",Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = shpreferencias.edit();
             editor.putString("usuario", edtUsuario.getText().toString());

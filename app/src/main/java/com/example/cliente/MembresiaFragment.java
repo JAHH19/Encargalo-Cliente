@@ -131,11 +131,11 @@ public class MembresiaFragment extends Fragment {
         btnregistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RegistrarMembresia("http://"+ IPConfig.ipServidor +"patrocinador/registrarMembresia.php");
+                RegistrarMembresia( IPConfig.ipServidor +"patrocinador/registrarMembresia.php");
             }
         });
 
-        ConsultarMembresia("http://"+ IPConfig.ipServidor +"patrocinador/consultarMembresia.php?usuario="+idusuario);
+        ConsultarMembresia( IPConfig.ipServidor +"patrocinador/consultarMembresia.php?usuario="+idusuario);
 
 
         return view;

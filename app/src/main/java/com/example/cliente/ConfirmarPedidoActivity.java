@@ -71,7 +71,7 @@ public class ConfirmarPedidoActivity extends AppCompatActivity {
         btnenviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String URL = "http://"+ IPConfig.ipServidor +"cliente/obtenerIdPedido.php?total="+subtotal+"&hora="+hora+"&fecha="+fecha+"&comentario="+txtComentario.getText()+"&idusuario="+usuario+"&idtienda="+idtienda_1+"&descripcion="+txtDescripcion.getText();
+                String URL =  IPConfig.ipServidor +"cliente/obtenerIdPedido.php?total="+subtotal+"&hora="+hora+"&fecha="+fecha+"&comentario="+txtComentario.getText()+"&idusuario="+usuario+"&idtienda="+idtienda_1+"&descripcion="+txtDescripcion.getText();
                 URL = URL.replaceAll(" ", "%20");
                 StringRequest request = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
                     @Override
@@ -101,7 +101,7 @@ public class ConfirmarPedidoActivity extends AppCompatActivity {
                     Runnable runnable = new Runnable() {
                         @Override
                         public void run() {
-                            String URL2 = "http://"+ IPConfig.ipServidor +"cliente/ingresarlistapedido.php?idtiendaproducto="+cart.get(finalI).getIdProducto()+"&idpedido="+idpedido+"&cantidad="+cart.get(finalI).getCant()+"&preciouniMX="+cart.get(finalI).getPrecio()+"&subtotal="+String.valueOf((Double.parseDouble(cart.get(finalI).getCant())*Double.parseDouble(cart.get(finalI).getPrecio())*100)/100.0);
+                            String URL2 =  IPConfig.ipServidor +"cliente/ingresarlistapedido.php?idtiendaproducto="+cart.get(finalI).getIdProducto()+"&idpedido="+idpedido+"&cantidad="+cart.get(finalI).getCant()+"&preciouniMX="+cart.get(finalI).getPrecio()+"&subtotal="+String.valueOf((Double.parseDouble(cart.get(finalI).getCant())*Double.parseDouble(cart.get(finalI).getPrecio())*100)/100.0);
                             StringRequest request2 = new StringRequest(Request.Method.GET, URL2, new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {

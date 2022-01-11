@@ -65,7 +65,7 @@ public class PromocionesFragment extends Fragment {
         promoArrayList.clear();
 
 
-        url="http://"+ IPConfig.ipServidor +"tienda/consultaPromocion.php";
+        url= IPConfig.ipServidor +"tienda/consultaPromocion.php";
         loadPromos();
         loadMoreBtn.setOnClickListener(new View.OnClickListener() {
             @Override

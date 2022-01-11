@@ -59,7 +59,7 @@ public class RecyclerCategoria extends RecyclerView.Adapter<RecyclerCategoria.Re
         holder.tvCategoria.setText(item.getCategoria());
         idtienda = item.getIdTienda();
         categoria=item.getCategoria();
-        String URL = "http://"+ IPConfig.ipServidor +"cliente/ListarProductosporCat.php?idtienda="+idtienda+"&categoria="+categoria;
+        String URL = IPConfig.ipServidor +"cliente/ListarProductosporCat.php?idtienda="+idtienda+"&categoria="+categoria;
         URL = URL.replaceAll(" ", "%20");
         StringRequest requesty = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
             @Override

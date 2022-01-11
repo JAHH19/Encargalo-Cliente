@@ -75,7 +75,7 @@ public class AnuncioDetallesFragment extends Fragment {
 
 
     private void loadAdsDetail() {
-        String url="http://"+ IPConfig.ipServidor +"patrocinador/consultaanuncioid.php?idanuncio="+ adsId;
+        String url=IPConfig.ipServidor +"patrocinador/consultaanuncioid.php?idanuncio="+ adsId;
 
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {

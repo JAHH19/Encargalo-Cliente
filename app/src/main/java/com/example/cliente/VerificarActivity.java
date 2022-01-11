@@ -72,7 +72,7 @@ public class VerificarActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                ejecutarServicio("http://"+ IPConfig.ipServidor +"cliente/registrarcliente.php");
+                ejecutarServicio(IPConfig.ipServidor +"cliente/registrarcliente.php");
                 iraPrincipal();
             }
         });

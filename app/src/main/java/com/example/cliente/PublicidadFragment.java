@@ -114,7 +114,7 @@ public class PublicidadFragment extends Fragment  {
     private Bitmap bitmap;
     String adsId;
     private Uri filePath;
-    public static final String UPLOAD_URL = "http://"+ IPConfig.ipServidor +"patrocinador/uploadImages.php";
+    public static final String UPLOAD_URL =  IPConfig.ipServidor +"patrocinador/uploadImages.php";
     Calendar calendar = Calendar.getInstance();
     String[] arraySpinner;
 
@@ -201,7 +201,7 @@ public class PublicidadFragment extends Fragment  {
             }
         });
 
-        listarcategorias("http://"+ IPConfig.ipServidor +"cliente/consultarcategorias.php");
+        listarcategorias( IPConfig.ipServidor +"cliente/consultarcategorias.php");
 
         //Carga de datos al datepicker
 
@@ -459,10 +459,10 @@ public class PublicidadFragment extends Fragment  {
                                 if(IsValid(titulo) && IsValid(descripcion) && IsValid(url)&& IsValidImage(filePath,getContext())){
                                     if(adsId==null){
                                         uploadMultipart();
-                                        ejecutarServicio("http://"+ IPConfig.ipServidor +"patrocinador/registrarAnuncio.php");
+                                        ejecutarServicio( IPConfig.ipServidor +"patrocinador/registrarAnuncio.php");
                                     }else{
 
-                                        ActualizarPublicidad("http://"+ IPConfig.ipServidor +"patrocinador/actualizarAnuncio.php?idanuncio="+adsId);
+                                        ActualizarPublicidad( IPConfig.ipServidor +"patrocinador/actualizarAnuncio.php?idanuncio="+adsId);
                                     }
 
 
@@ -763,7 +763,7 @@ public class PublicidadFragment extends Fragment  {
     }
 
     private void loadAdsDetail() {
-        String urlp="http://"+ IPConfig.ipServidor +"patrocinador/consultaanuncioid.php?idanuncio="+ adsId;
+        String urlp=IPConfig.ipServidor +"patrocinador/consultaanuncioid.php?idanuncio="+ adsId;
 
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, urlp, new Response.Listener<String>() {

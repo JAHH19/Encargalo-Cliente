@@ -136,7 +136,7 @@ btncerrar.setOnClickListener(new View.OnClickListener() {
 
         }
 
-        String URL = "http://"+ IPConfig.ipServidor +"cliente/ListarCategoriaporID.php?idtienda="+idtienda;
+        String URL =  IPConfig.ipServidor +"cliente/ListarCategoriaporID.php?idtienda="+idtienda;
         request = Volley.newRequestQueue(this);
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,URL,null,this,this);
         request.add(jsonObjectRequest);

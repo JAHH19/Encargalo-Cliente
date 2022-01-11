@@ -49,7 +49,7 @@ public class GalleryFragment extends Fragment {
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
 
-                                        CancelarMembresia("http://"+ IPConfig.ipServidor +"patrocinador/cancelarMembresia.php?usuario="+idusuario);
+                                        CancelarMembresia( IPConfig.ipServidor +"patrocinador/cancelarMembresia.php?usuario="+idusuario);
                                         dialog.dismiss();
                                     }
                                 })
@@ -65,7 +65,7 @@ public class GalleryFragment extends Fragment {
 
             }
         });
-        ObtenerMembresia("http://"+ IPConfig.ipServidor +"patrocinador/consultarNivelMembresia.php?usuario="+idusuario);
+        ObtenerMembresia( IPConfig.ipServidor +"patrocinador/consultarNivelMembresia.php?usuario="+idusuario);
 
 
         return root;

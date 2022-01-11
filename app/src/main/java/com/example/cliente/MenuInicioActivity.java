@@ -118,7 +118,7 @@ public class MenuInicioActivity extends AppCompatActivity implements Response.Er
 
 
 
-            buscarAnuncio("http://"+ IPConfig.ipServidor +"patrocinador/consultaranuncio.php?idusuario="+idusuario);
+            buscarAnuncio( IPConfig.ipServidor +"patrocinador/consultaranuncio.php?idusuario="+idusuario);
 
 
 
@@ -185,7 +185,7 @@ public class MenuInicioActivity extends AppCompatActivity implements Response.Er
     }
     public  void updateNavHeader(){
         idusu = getIntent().getStringExtra("idusuario");
-        String URL = "http://"+ IPConfig.ipServidor +"cliente/consultarNombreUbicacionusuario.php?idusuario="+idusu;
+        String URL =IPConfig.ipServidor +"cliente/consultarNombreUbicacionusuario.php?idusuario="+idusu;
         URL = URL.replace(" ", "%20");
         request = Volley.newRequestQueue(this);
         jsonObjectRequest = new  JsonObjectRequest(Request.Method.GET,URL,null,this,this);
@@ -242,7 +242,7 @@ public class MenuInicioActivity extends AppCompatActivity implements Response.Er
 
     @Override
     protected void onResume() {
-        buscarAnuncio("http://"+ IPConfig.ipServidor +"patrocinador/consultaranuncio.php?idusuario="+idusuario);
+        buscarAnuncio( IPConfig.ipServidor +"patrocinador/consultaranuncio.php?idusuario="+idusuario);
         adcontainer.setVisibility(View.VISIBLE);
         super.onResume();
     }

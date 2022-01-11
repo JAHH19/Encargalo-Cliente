@@ -85,7 +85,7 @@ public class CategoriaFragment extends Fragment {
             }
         });
 
-        listarcategorias("http://"+ IPConfig.ipServidor +"cliente/consultarcategorias.php");
+        listarcategorias(IPConfig.ipServidor +"cliente/consultarcategorias.php");
         // Inflate the layout for this fragment
         return view;
     }
