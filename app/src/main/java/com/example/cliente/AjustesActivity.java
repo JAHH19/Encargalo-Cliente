@@ -17,7 +17,7 @@ import android.widget.Toast;
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link AjustesActivity#newInstance} factory method to
- * create an instance of this fragment.
+ * create an instance of this fragment.prueba
  */
 public class AjustesActivity extends Fragment {
 
