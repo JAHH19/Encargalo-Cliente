@@ -100,15 +100,15 @@ public class PromocionesFragment extends Fragment {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         try {
                             JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                            String id = jsonObject1.getString("id");
-                            String titulo= jsonObject1.getString("Titulo");
-                            String estado = jsonObject1.getString("Estado");
-                            String idtienda = jsonObject1.getString("idTienda");
-                            String url = jsonObject1.getString("imagen");
-                            String fechainicio = jsonObject1.getString("fecha");
-                            String fechafinal = jsonObject1.getString("fechafin");
-                            String idcategoria = jsonObject1.getString("idCategoria");
-                            String idproducto = jsonObject1.getString("idProducto");
+                            String id = jsonObject1.getString("id_promocion");
+                            String titulo= jsonObject1.getString("descripcion") + " " +jsonObject1.getString("tipo_promocion");
+                            String estado = jsonObject1.getString("tipo_promocion");
+                            String idtienda = jsonObject1.getString("IdTienda");
+                            String url = jsonObject1.getString("img_promo");
+                            String fechainicio = jsonObject1.getString("f_inicio");
+                            String fechafinal = jsonObject1.getString("f_fin");
+                            String idcategoria = jsonObject1.getString("IdCategoria");
+                            String idproducto = jsonObject1.getString("IdTiendaProducto");
 
                             idtiendas=idtienda;
                             Log.d(TAG, "onReposnse99 " + idtiendas);

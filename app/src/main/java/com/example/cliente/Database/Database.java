@@ -64,7 +64,7 @@ public class Database extends SQLiteAssetHelper {
                         ));
             }while (c.moveToNext());
         }
-
+        c.close();
         return result;
     }
     public void  addLista(ItemListOrder order){
